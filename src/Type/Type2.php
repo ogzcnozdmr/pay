@@ -11,8 +11,8 @@ class Type2 extends Type {
      */
     public function start() : array
     {
-        $MbrId = $this->bankInfo->getType() === 2 ? '12' : '5';
-        $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings()->txnType. $this->cardInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
+        $MbrId = $this->bankInfo->getType() === 1 ? '5' : '12';
+        $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings()->txnType. $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
 
         $data = [
             'MbrId' => $MbrId,
@@ -20,15 +20,15 @@ class Type2 extends Type {
             'UserCode' => $this->bankInfo->getSecurityName(),
             'UserPass' => $this->bankInfo->getSecurityPassword(),
             'SecureType' => $this->bankInfo->getStoreType(),
-            'TxnType' => 'Auth',
-            'InstallmentCount' => $this->cardInfo->getInstallment(),
+            'TxnType' => $this->bankInfo->getSettings()->txnType,
+            'InstallmentCount' => $this->orderInfo->getInstallment(),
             'Currency' => $this->orderInfo->getCurrency(),
             'OkUrl' => $this->urlInfo->getOk(),
             'FailUrl' => $this->urlInfo->getFail(),
             'OrderId' => $this->orderInfo->getCode(),
             'OrgOrderId' => $this->orderInfo->getCode(),
             'PurchAmount' => $this->orderInfo->getTotal(),
-            'Lang' => 'TR',
+            'Lang' => $this->bankInfo->getSettings()->lang,
             'Rnd' => $this->orderInfo->getRandom(),
             'Hash' => base64_encode(pack('H*', sha1($hashstr))),
             'Pan'=> $this->cardInfo->getNumber(),
@@ -114,18 +114,13 @@ class Type2 extends Type {
     {
         return [
             'total'    => $this->request['amount'],
-            'installment' => $this->orderInfo->getInstallment(),
             'clientid' => $this->request['clientid'],
             'expires'  => $this->request['Ecom_Payment_Card_ExpDate_Month'].'/'.$this->request['Ecom_Payment_Card_ExpDate_Year'],
             'cv2'      => $this->request['cv2'],
-            'oid'      => $this->orderInfo->getCode(),
-            'email'    => $this->getMail(),
             'xid'      => $this->request['xid'],
             'eci'      => $this->request['eci'],
             'cavv'     => $this->request['cavv'],
-            'md'       => $this->request['md'],
-            'mode'     => 'P',
-            'type'     => 'Auth'
+            'md'       => $this->request['md']
         ];
     }
     /**
@@ -187,16 +182,16 @@ class Type2 extends Type {
         $data = str_replace("{PASSWORD}", $this->bankInfo->getSecurityPassword(), $data);
         $data = str_replace("{CLIENTID}", $value['clientid'], $data);
         $data = str_replace("{IP}", $this->getIp(), $data);
-        $data = str_replace("{OID}", $this->orderCode, $data);
-        $data = str_replace("{MODE}", $value['mode'], $data);
-        $data = str_replace("{TYPE}", $value['type'], $data);
+        $data = str_replace("{OID}", $this->orderInfo->getCode(), $data);
+        $data = str_replace("{MODE}", $this->bankInfo->getSettings()->mode, $data);
+        $data = str_replace("{TYPE}", $this->bankInfo->getSettings()->type, $data);
         $data = str_replace("{XID}", $value['xid'], $data);
         $data = str_replace("{ECI}", $value['eci'], $data);
         $data = str_replace("{CAVV}", $value['cavv'], $data);
         $data = str_replace("{MD}", $value['md'], $data);
         $data = str_replace("{TOTAL}", $value['total'], $data);
-        $data = str_replace("{CURRENCY}", $this->orderInfo->get, $data);
-        $data = str_replace("{TAKSIT}", $value['installment'], $data);
+        $data = str_replace("{CURRENCY}", $this->orderInfo->getCurrency(), $data);
+        $data = str_replace("{TAKSIT}", $this->orderInfo->getInstallment(), $data);
         $data = str_replace("{EMAIL}", $this->getMail(), $data);
         return $data;
     }

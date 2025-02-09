@@ -66,14 +66,6 @@ class Type1 extends Type {
         return $this->request['oid'];
     }
     /**
-     * Result order code
-     * @return string
-     */
-    public function resultTotal() : string
-    {
-        return $this->request['amount'];
-    }
-    /**
      * Control signature
      * @return bool
      */

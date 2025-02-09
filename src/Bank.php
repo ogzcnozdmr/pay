@@ -82,6 +82,19 @@ class Bank
     }
 
     /**
+     * Set Settings
+     * @param string $key
+     * @param string|int $value
+     * @return void
+     */
+    public function setSettings(string $key, string|int $value): void
+    {
+        if (isset($this->settings->{$key})) {
+            $this->settings->{$key} = $value;
+        }
+    }
+
+    /**
      * Get Name
      * @return string
      */

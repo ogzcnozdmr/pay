@@ -32,16 +32,19 @@ class Order
      */
     public function setTotal(float $value)
     {
-        $this->total = $value;
+        $this->total = floatval(number_format($value, 2, '.', ''));
     }
 
     /**
      * Set Card Installment
-     * @param int $value
-     * @return void
+     * @param mixed $value
+     * @return int
      */
-    public function setInstallment(int $value)
+    public function setInstallment(mixed $value) : int
     {
+        if (gettype($value) !== 'integer') {
+            $value = intval($value);
+        }
         $this->installment = $value < 2 ? 0 : $value;
     }
 

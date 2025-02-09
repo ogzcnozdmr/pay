@@ -1,12 +1,25 @@
 {
   "type1" : {
-    "billToCompany" : "dotcomsoft",
-    "billToName" : "dotcomsoft",
+    "billToCompany" : "soft",
+    "billToName" : "soft",
     "hashAlgorithm" : "ver3",
     "lang" : "tr",
     "refreshTime" : 5,
     "tranType" : "Auth",
     "mode" : "P",
     "type" : "Auth"
+  },
+  "type2" : {
+    "TxnType" : "Auth",
+    "lang" : "TR",
+    "mode" : "P",
+    "type" : "Auth"
+  },
+  "type3" : {
+    "lang" : "TR",
+    "txnType" : "Auth"
+  },
+  "type4" : {
+    "transactionType" : "Sale"
   }
 }

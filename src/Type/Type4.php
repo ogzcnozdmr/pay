@@ -16,39 +16,22 @@ class Type4 extends Type {
         $postRequest_url = '';
         $data = [];
 
-        if (str_contains($this->orderTotal, '.')) {
-            $exp = explode('.', $this->orderTotal);
-            $strlen = strlen($exp[1]);
-            if ($strlen > 2) {
-                $exp[1] = substr($exp[1], 0, 2);
-            } else {
-                if ($strlen === 1) {
-                    $exp[1] .= '0';
-                } else {
-                    $exp[1] = '00';
-                }
-            }
-            $this->orderTotal = implode('.', $exp);
-        } else {
-            $this->orderTotal .= '.00';
-        }
-
         $curldata = [
             'MerchantId' => $this->bankInfo->getSecurityName(),
             'MerchantPassword' => $this->bankInfo->getSecurityPassword(),
-            'VerifyEnrollmentRequestId' => $this->orderCode,
+            'VerifyEnrollmentRequestId' => $this->orderInfo->getCode(),
             'Pan'=> $this->cardInfo->getNumber(),
             'ExpiryDate' => $this->cardInfo->getExpireYear().$this->cardInfo->getExpireMonth(),
-            'PurchaseAmount' => $this->orderTotal,
-            'Currency' => $this->currency,
+            'PurchaseAmount' => number_format($this->orderInfo->getTotal(),2,'.','.'),
+            'Currency' => $this->orderInfo->getCurrency(),
             'BrandName' => $this->cardInfo->getType() === 1 ? '100' : '200', //1 visa 2 mastercard
             'SuccessUrl' => $this->urlInfo->getOk(),
             'FailureUrl' => $this->urlInfo->getFail(),
             'SessionInfo' => $this->cardInfo->getCvv()
         ];
 
-        if ($this->cardInfo->getInstallment() != '') {
-            $curldata['InstallmentCount'] = $this->cardInfo->getInstallment();
+        if ($this->orderInfo->getInstallment() > 1) {
+            $curldata['InstallmentCount'] = $this->orderInfo->getInstallment();
         }
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = $this->curl($curldata);
@@ -108,16 +91,13 @@ class Type4 extends Type {
      */
     public function resultData() : array
     {
-        $total = (substr($this->request['PurchAmount'], 0, -2) ?: 0).'.'.substr($this->request['PurchAmount'], -2);
         return [
-            'total' => $total,
-            'installment' => $this->installment,
+            'total' => number_format($this->request['PurchAmount'],2,'.','.'),
             'pan' => $this->request['Pan'],
             'expiry' => '20'.$this->request['Expiry'],
             'cvv' => $this->request['SessionInfo'],
             'currencyamount' => $this->request['PurchAmount'],
             'transactionid' => $this->request['VerifyEnrollmentRequestId'],
-            'transactiontype' => 'Sale',
             'cavv' => $this->request['Cavv'],
             'eci' => $this->request['Eci']
         ];
@@ -136,8 +116,8 @@ class Type4 extends Type {
             "<Password>{PASSWORD}</Password>".
             "<TerminalNo>{CLIENTID}</TerminalNo>".
             "<TransactionType>{TRANSACTIONTYPE}</TransactionType>";
-        if ($value['installment'] !== '') {
-            $data .= "<NumberOfInstallments>{INSTALLMENT}</NumberOfInstallments>";
+        if ($this->orderInfo->getInstallment() > 1) {
+            $data .= "<NumberOfInstallments>".$this->orderInfo->getInstallment()."</NumberOfInstallments>";
         }
         $data .= "<CurrencyAmount>{TOTAL}</CurrencyAmount>".
             "<CurrencyCode>{CURRENCYCODE}</CurrencyCode>".
@@ -153,19 +133,16 @@ class Type4 extends Type {
         $data = str_replace("{NAME}", $this->bankInfo->getSecurityName(), $data);
         $data = str_replace("{PASSWORD}", $this->bankInfo->getSecurityPassword(), $data);
         $data = str_replace("{CLIENTID}", $this->bankInfo->getSecurityClient(), $data);
-        $data = str_replace("{TRANSACTIONTYPE}", $value['transactiontype'], $data);
+        $data = str_replace("{TRANSACTIONTYPE}", $this->bankInfo->getSettings()->transactionType, $data);
         $data = str_replace("{TOTAL}", $value['total'], $data);
-        $data = str_replace("{CURRENCYCODE}", $this->currency, $data);
+        $data = str_replace("{CURRENCYCODE}", $this->orderInfo->getCurrency(), $data);
         $data = str_replace("{PAN}", $value['pan'], $data);
         $data = str_replace("{CVV}", $value['cvv'], $data);
         $data = str_replace("{ECI}", $value['eci'], $data);
         $data = str_replace("{CAVV}", $value['cavv'], $data);
         $data = str_replace("{MPITRANSACTIONID}", $value['transactionid'], $data);
         $data = str_replace("{EXPIRY}", $value['expiry'], $data);
-        $data = str_replace("{IP}", $this->ip, $data);
-        if ($value['installment'] !== '') {
-            $data = str_replace("{INSTALLMENT}", $value['installment'], $data);
-        }
+        $data = str_replace("{IP}", $this->getIp(), $data);
         return $data;
     }
 

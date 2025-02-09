@@ -11,40 +11,31 @@ class Type3 extends Type {
      */
     public function start() : array
     {
-        /*
-         * Tarih veya her seferinde değişen bir değer, güvenlik amaçlı
-         */
-        $microtime = microtime();
+        $MbrId = $this->bankInfo->getType() === 1 ? '5' : '12';
+        $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings()->txnType. $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
 
-        $MbrId = $this->bankInfo->getType() === 2 ? '12' : '5';
-        $TxnType = 'Auth';
-        $Lang = 'TR';
-        $hashstr = $MbrId . $this->orderCode . $this->orderTotal . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $TxnType. $this->cardInfo->getInstallment() . $microtime  . $this->bankInfo->getSecurityStoreKey();
-        $hash = base64_encode(pack('H*', sha1($hashstr)));
-
-        $postRequest_url = $this->bankInfo->getApiUrl3d();
         $data = [
             'MbrId' => $MbrId,
             'MerchantID' => $this->bankInfo->getSecurityClient(),
             'UserCode' => $this->bankInfo->getSecurityName(),
             'SecureType' => $this->bankInfo->getStoreType(),
-            'TxnType' => $TxnType,
-            'InstallmentCount' => $this->cardInfo->getInstallment(),
-            'Currency' => $this->currency,
+            'TxnType' => $this->bankInfo->getSettings()->txnType,
+            'InstallmentCount' => $this->orderInfo->getInstallment(),
+            'Currency' => $this->orderInfo->getCurrency(),
             'OkUrl' => $this->urlInfo->getOk(),
             'FailUrl' => $this->urlInfo->getFail(),
-            'OrderId' => $this->orderCode,
+            'OrderId' => $this->orderInfo->getCode(),
             'OrgOrderId' => '',
-            'PurchAmount' => $this->orderTotal,
-            'Lang' => $Lang,
-            'Rnd' => $microtime,
-            'Hash' => $hash,
+            'PurchAmount' => $this->orderInfo->getTotal(),
+            'Lang' => $this->bankInfo->getSettings()->lang,
+            'Rnd' => $this->orderInfo->getRandom(),
+            'Hash' => base64_encode(pack('H*', sha1($hashstr))),
             'CardHolderName'=> $this->cardInfo->getName(),
             'Pan'=> $this->cardInfo->getNumber(),
             'Cvv2' => $this->cardInfo->getCvv(),
             'Expiry' => $this->cardInfo->getExpireYear().$this->cardInfo->getExpireMonth()
         ];
-        return [true, '', $postRequest_url, $data];
+        return [true, '', $this->bankInfo->getApiUrl3d(), $data];
     }
     /**
      * Pay result
@@ -77,7 +68,7 @@ class Type3 extends Type {
     public function control3d() : array
     {
         $mdStatus = $this->request['3DStatus'];
-        $status = $mdStatus == "1";
+        $status = $mdStatus == '1';
         $message = $this->request['ErrMsg'] ?: '';
         return [$status, $message];
     }

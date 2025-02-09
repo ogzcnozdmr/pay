@@ -51,6 +51,9 @@ class Type
         $this->cardInfo = $cardInfo;
         $this->urlInfo = $urlInfo;
 
+        $this->urlInfo->setBank($bankInfo->getKey());
+        $this->urlInfo->setInstallment($orderInfo->getInstallment());
+
         /*
          * Siparişi oluşturur
          */
@@ -62,7 +65,7 @@ class Type
             if ($error !== '') {
                 $error = "($error)";
             }
-            $this->paymentFinish([
+            return $this->paymentFinish([
                 "result" => false,
                 "message" => "İşlem onay almadı {$error}"
             ]);
@@ -74,9 +77,9 @@ class Type
      * Result Pay
      * @param Bank $bankInfo
      * @param int $installment
-     * @return void
+     * @return array
      */
-    public function __result(Bank $bankInfo, int $installment)
+    public function __result(Bank $bankInfo, mixed $installment) : array
     {
         $this->bankInfo = $bankInfo;
 
@@ -86,17 +89,17 @@ class Type
 
         /*$this->logsClass->__create([
             'logs_url' => request()->server('REQUEST_URI'),
-            'logs_variables' => __encrypt(__json_encode($this->request), $this->orderCode.$this->bankInfo->getKey()),
+            'logs_variables' => __encrypt(__pay_json_encode($this->request), $this->orderCode.$this->bankInfo->getKey()),
             'logs_bank' => $this->bankInfo->getKey(),
-            'logs_installment' => $this->installment,
-            'logs_code' => $this->orderCode
+            'logs_installment' => $this->orderInfo->getInstallment(),
+            'logs_code' => $this->orderInfo->getCode()
         ]);*/
 
         /**
          * Digital Signature Control
          */
         if (!$this->controlSignature()) {
-            $this->paymentFinish([
+            return $this->paymentFinish([
                 "result"  => false,
                 "message" => 'Güvenlik uyarısı. Sayısal imza geçerli değil.'
             ]);
@@ -111,7 +114,7 @@ class Type
             if ($control3dMessage !== '') {
                 $control3dMessage = "($control3dMessage)";
             }
-            $this->paymentFinish([
+            return $this->paymentFinish([
                 "result" => false,
                 "message" => "3D işlemi onay almadı {$control3dMessage}"
             ]);
@@ -130,68 +133,32 @@ class Type
         /*
          * Sonuçların veritabanından güncellenmesi
          */
-        $this->updateEvent([
-            "pay_json"    => json_encode($data, true),
+        /*$this->updateEvent([
+            "pay_json"    => __pay_json_encode($data, true),
             "pay_date"    => date('Y-m-d H:i:s'),
             "pay_result"  => $result ? 'success' : 'error',
             "pay_message" => $message
-        ]);
+        ]);*/
 
-        $this->paymentFinish([
+        return $this->paymentFinish([
             'result' => $result,
-            'message' => $message
+            'message' => $message,
+            'data' => $data
         ]);
     }
 
     /**
      * Payment finish die
      * @param array $json
-     * @return void
+     * @return array
      */
-    protected function paymentFinish(array $json) : void
+    protected function paymentFinish(array $json) : array
     {
-        $orderUrl = route('pay.screen', [
-            'orderCode' => $this->orderCode
-        ]);
-        $success = $this->orderDetail['pay_result'] === 'success';
-        /*
-         * Sipariş bilgisi varsa email ve bildirim yollar
-         */
-        if (!empty($this->order)) {//TODO::TAPILACAK
-            if ($success) {
-                $this->paymentFinishSuccessEvent();
-            } else {
-                $this->paymentFinishErrorEvent();
-            }
-            $notificationText = $this->orderDetail['pay_result'] === 'success' ? 'Teşekkür ederiz. Online ödeme yapıldı.' : 'Online ödeme işlemi başarısız.';
-            $smsAddText = $this->orderDetail['pay_result'] === 'process' ? 'ödeme yapmanı için bekleniyor' : ($this->orderDetail['pay_result'] === 'success' ? 'başarıyla alınmıştır' : "'{$this->orderDetail['pay_message']}' hatasından dolayı ödeme tamamlanamamıştır");
-        }
-
-        /*
-         * Yönlendirmeyi yapar
-         */
-        $redirectLink = "{$orderUrl}?result=".($json['result'] ? '1' : '0')."&message={$json['message']}";
-        if ($json['result']) {
-            $redirectLink .= "&total={$this->order['order_total']}";
-        }
-
         /**
-         * İnsert database history
-         */
-        $this->insertHistory($json['result'] ? 'success' : 'error', $json['message']);
-
-        header("Location: $redirectLink", true);
-        die();
-    }
-
-    protected function paymentFinishSuccessEvent()
-    {
-
-    }
-
-    protected function paymentFinishErrorEvent()
-    {
-
+        * İnsert database history
+        */
+        //$this->insertHistory($json['result'] ? 'success' : 'error', $json['message']);
+        return $json;
     }
 
     /**
@@ -272,16 +239,6 @@ class Type
     }
 
     /**
-     * Update database
-     * @param array $array
-     * @return void
-     */
-    private function updateEvent(array $array) : void
-    {
-
-    }
-
-    /**
      * Update database history
      * @param string $result
      * @param string $message
@@ -290,7 +247,7 @@ class Type
     private function insertHistory(string $result, string $message) : void
     {
         $this->history[] = [
-            'order_number' => $this->orderCode,
+            'order_number' => $this->orderInfo->getCode(),
             'pay_history_result' => $result,
             'pay_history_message' => $message
         ];
@@ -332,10 +289,10 @@ class Type
     private function postRequest(string $url, array $params) {
         $this->logs[] = [
             'url' => request()->server('REQUEST_URI'),
-            'variables' => __encrypt(__json_encode(request()->all()), $this->orderCode.$this->bankInfo->getKey()),
+            'variables' => __encrypt(__pay_json_encode(request()->all()), $this->orderInfo->getCode().$this->bankInfo->getKey()),
             'bank' => 'post request',
-            'installment' => __encrypt(__json_encode($params), $this->orderCode.$this->bankInfo->getKey()),
-            'code' => $this->orderCode
+            'installment' => __encrypt(__pay_json_encode($params), $this->orderInfo->getCode().$this->bankInfo->getKey()),
+            'code' => $this->orderInfo->getCode()
         ];
         $query_content = http_build_query($params);
         $fp = fopen($url, 'r', FALSE, // do not use_include_path
@@ -351,7 +308,7 @@ class Type
             ])
         );
         if ($fp === FALSE) {
-            return __json_encode(['error' => 'Failed to get contents...']);
+            return __pay_json_encode(['error' => 'Failed to get contents...']);
         }
         $result = stream_get_contents($fp); // no maxlength/offset
         fclose($fp);
