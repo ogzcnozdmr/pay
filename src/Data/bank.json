@@ -1,0 +1,58 @@
+{
+  "teb": {
+    "name": "Teb Kart",
+    "type": "1",
+    "api_url": "https://sanalpos.teb.com.tr/fim/api",
+    "api_url_3d": "https://sanalpos.teb.com.tr/fim/est3Dgate",
+    "store_type" : "3d",
+    "store_3d_type" : ""
+  },
+  "ak": {
+    "name": "Ak Kart",
+    "type": "1",
+    "api_url": "https://www.sanalakpos.com/fim/api",
+    "api_url_3d": "https://www.sanalakpos.com/fim/est3Dgate",
+    "store_type" : "3d",
+    "store_3d_type" : ""
+  },
+  "ziraat": {
+    "name": "Ziraat Kart",
+    "type": "1",
+    "api_url": "https://sanalpos2.ziraatbank.com.tr/fim/api",
+    "api_url_3d": "https://sanalpos2.ziraatbank.com.tr/fim/est3Dgate",
+    "store_type" : "3d",
+    "store_3d_type" : ""
+  },
+  "is": {
+    "name": "İş Kart",
+    "type": "1",
+    "api_url": "https://sanalpos.isbank.com.tr/fim/api",
+    "api_url_3d": "https://sanalpos.isbank.com.tr/fim/est3Dgate",
+    "store_type" : "3d",
+    "store_3d_type" : ""
+  },
+  "ziraatkatilim": {
+    "name": "Ziraat Katılım",
+    "type": "2",
+    "api_url": "https://vpos.ziraatkatilim.com.tr/MPI/Default.aspx",
+    "api_url_3d": "https://vpos.ziraatkatilim.com.tr/MPI/3DHost.aspx",
+    "store_type" : "3d",
+    "store_3d_type" : ""
+  },
+  "finans": {
+    "name": "Finans Kart",
+    "type": "3",
+    "api_url": "https://vpos.qnbfinansbank.com/Gateway/Default.aspx",
+    "api_url_3d": "https://vpos.qnbfinansbank.com/Gateway/Default.aspx",
+    "store_type" : "3DModel",
+    "store_3d_type" : "3DModelPayment"
+  },
+  "vakif": {
+    "name": "Vakıf Kart",
+    "type": "4",
+    "api_url": "https://onlineodeme.vakifbank.com.tr:4443/VposService/v3/Vposreq.aspx",
+    "api_url_3d": "https://3dsecure.vakifbank.com.tr:4443/MPIAPI/MPI_Enrollment.aspx",
+    "store_type" : "3d",
+    "store_type_3d" : ""
+  }
+}
