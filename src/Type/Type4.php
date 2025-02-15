@@ -12,7 +12,7 @@ class Type4 extends Type {
     public function start() : array
     {
         $success = false;
-        $error = '';
+        $error = 'İşlem Başarısız';
         $postRequest_url = '';
         $data = [];
 
@@ -92,7 +92,7 @@ class Type4 extends Type {
     public function resultData() : array
     {
         return [
-            'total' => number_format($this->request['PurchAmount'],2,'.','.'),
+            'total' => number_format($this->request['PurchAmount'],2,'.','.'),//123456.67
             'pan' => $this->request['Pan'],
             'expiry' => '20'.$this->request['Expiry'],
             'cvv' => $this->request['SessionInfo'],

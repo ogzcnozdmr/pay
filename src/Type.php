@@ -54,11 +54,6 @@ class Type
         $this->urlInfo->setBank($bankInfo->getKey());
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
-        /*
-         * Siparişi oluşturur
-         */
-        $this->orderInsertEvent();
-
         list($status, $error, $postRequest_url, $data) = $this->start();
 
         if (!$status) {
@@ -86,14 +81,6 @@ class Type
         $this->orderInfo = new Order();
         $this->orderInfo->setCode($this->resultOrderCode());
         $this->orderInfo->setInstallment($installment);
-
-        /*$this->logsClass->__create([
-            'logs_url' => request()->server('REQUEST_URI'),
-            'logs_variables' => __encrypt(__pay_json_encode($this->request), $this->orderCode.$this->bankInfo->getKey()),
-            'logs_bank' => $this->bankInfo->getKey(),
-            'logs_installment' => $this->orderInfo->getInstallment(),
-            'logs_code' => $this->orderInfo->getCode()
-        ]);*/
 
         /**
          * Digital Signature Control
@@ -130,16 +117,6 @@ class Type
 
         $message = $result ? 'Ödeme işlemi başarıyla gerçekleştirildi' : $error;
 
-        /*
-         * Sonuçların veritabanından güncellenmesi
-         */
-        /*$this->updateEvent([
-            "pay_json"    => __pay_json_encode($data, true),
-            "pay_date"    => date('Y-m-d H:i:s'),
-            "pay_result"  => $result ? 'success' : 'error',
-            "pay_message" => $message
-        ]);*/
-
         return $this->paymentFinish([
             'result' => $result,
             'message' => $message,
@@ -157,7 +134,6 @@ class Type
         /**
         * İnsert database history
         */
-        //$this->insertHistory($json['result'] ? 'success' : 'error', $json['message']);
         return $json;
     }
 
@@ -227,33 +203,6 @@ class Type
     }
 
     /**
-     * Insert database
-     * @return void
-     */
-    private function orderInsertEvent() : void
-    {
-        /**
-         * İnsert database history
-         */
-        $this->insertHistory('process', 'Ödeme bekleniyor');
-    }
-
-    /**
-     * Update database history
-     * @param string $result
-     * @param string $message
-     * @return void
-     */
-    private function insertHistory(string $result, string $message) : void
-    {
-        $this->history[] = [
-            'order_number' => $this->orderInfo->getCode(),
-            'pay_history_result' => $result,
-            'pay_history_message' => $message
-        ];
-    }
-
-    /**
      * Set Mail
      * @param string $value
      * @return void
@@ -287,13 +236,6 @@ class Type
      * @return false|string
      */
     private function postRequest(string $url, array $params) {
-        $this->logs[] = [
-            'url' => request()->server('REQUEST_URI'),
-            'variables' => __encrypt(__pay_json_encode(request()->all()), $this->orderInfo->getCode().$this->bankInfo->getKey()),
-            'bank' => 'post request',
-            'installment' => __encrypt(__pay_json_encode($params), $this->orderInfo->getCode().$this->bankInfo->getKey()),
-            'code' => $this->orderInfo->getCode()
-        ];
         $query_content = http_build_query($params);
         $fp = fopen($url, 'r', FALSE, // do not use_include_path
             stream_context_create([

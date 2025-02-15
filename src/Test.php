@@ -38,12 +38,8 @@ class Test
         $bankInfo->setSecurityName('test test');
         $bankInfo->setSecurityPassword('password123');
         $bankInfo->setSecurityClient('client test');
-        //$bankInfo->setSecurityStoreKey('store key test');
 
         $payClass = new Pay();
         $payClass->result($bankInfo, $installment);
-
-
-
     }
 }
