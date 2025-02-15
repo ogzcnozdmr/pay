@@ -34,6 +34,7 @@ class Card
     /**
      * Set Card Type
      * @param int $value
+     * 1-VISA | 2-MASTERCAD
      * @return void
      */
     public function setType(int $value)
