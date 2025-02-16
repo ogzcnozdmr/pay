@@ -15,12 +15,12 @@ class Bank
     private \stdClass $security;
     public function __construct(string $bank)
     {
-        $data = json_decode(file_get_contents('./Data/bank.json'));
+        $data = json_decode(file_get_contents(__DIR__ . '/Data/bank.json'));
         if (empty($data[$bank])) {
             return 'Banka bilgisi bulunmadı';
         }
 
-        $data = json_decode(file_get_contents('./Data/settings.json'));
+        $data = json_decode(file_get_contents(__DIR__ . '/Data/bank.json'));
         if (empty($data->{$bank})) {
             return 'Ayar bilgisi bulunmadı';
         }
