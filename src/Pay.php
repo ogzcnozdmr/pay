@@ -20,13 +20,14 @@ class Pay
 
     /**
      * Result
+     * @param array $request
      * @param Bank $bankInfo
      * @param mixed $installment
      * @return void
      */
-    public function result(Bank $bankInfo, mixed $installment = '') {
+    public function result(array $request, Bank $bankInfo, mixed $installment = '') {
         $type_class = implode('\\', ['Oguzcan', 'Type', 'Type'.$bankInfo->getSettings()->type]);
         $type_model = new $type_class();
-        $type_model->__start($bankInfo, $installment);
+        $type_model->__start($request, $bankInfo, $installment);
     }
 }
