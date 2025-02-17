@@ -12,7 +12,12 @@ class Bank
     private string $storeType;
     private string $storeType3d;
     private \stdClass $settings;
-    private \stdClass $security;
+    private array $security = [
+        'name' => '',
+        'password' => '',
+        'client' => '',
+        'storeKey' => ''
+    ];
     public function __construct(string $bank)
     {
         $data = __pay_json_decode(file_get_contents(__DIR__ . '/Data/bank.json'), true);
@@ -33,8 +38,6 @@ class Bank
         $this->apiUrl3d = $data[$bank]['apiUrl3d'];
         $this->storeType = $data[$bank]['storeType'];
         $this->storeType3d = $data[$bank]['storeType3d'];
-
-        $this->security = new \stdClass();
     }
 
     /**
@@ -44,7 +47,7 @@ class Bank
      */
     public function setSecurityName(string $value) : void
     {
-        $this->security->name = $value;
+        $this->security['name'] = $value;
     }
 
     /**
@@ -54,7 +57,7 @@ class Bank
      */
     public function setSecurityPassword(string $value): void
     {
-        $this->security->password = $value;
+        $this->security['password'] = $value;
     }
 
     /**
@@ -64,7 +67,7 @@ class Bank
      */
     public function setSecurityClient(string $value): void
     {
-        $this->security->client = $value;
+        $this->security['client'] = $value;
     }
 
     /**
@@ -74,7 +77,7 @@ class Bank
      */
     public function setSecurityStoreKey(string $value): void
     {
-        $this->security->storeKey = $value;
+        $this->security['storeKey'] = $value;
     }
 
     /**
@@ -168,7 +171,7 @@ class Bank
      */
     public function getSecurityName() : string
     {
-        return $this->security->name;
+        return $this->security['name'];
     }
 
     /**
@@ -177,7 +180,7 @@ class Bank
      */
     public function getSecurityPassword() : string
     {
-        return $this->security->password;
+        return $this->security['password'];
     }
 
     /**
@@ -186,7 +189,7 @@ class Bank
      */
     public function getSecurityClient() : string
     {
-        return $this->security->client;
+        return $this->security['client'];
     }
 
     /**
@@ -195,6 +198,6 @@ class Bank
      */
     public function getSecurityStoreKey() : string
     {
-        return $this->security->storeKey;
+        return $this->security['storeKey'];
     }
 }
