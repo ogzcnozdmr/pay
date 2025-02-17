@@ -11,7 +11,7 @@ class Bank
     private string $apiUrl3d;
     private string $storeType;
     private string $storeType3d;
-    private \stdClass $settings;
+    protected \stdClass $settings;
     private array $security = [
         'name' => '',
         'password' => '',
