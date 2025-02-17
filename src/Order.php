@@ -106,9 +106,9 @@ class Order
 
     /**
      * Get Random
-     * @return int
+     * @return string
      */
-    public function getRandom() : int
+    public function getRandom() : string
     {
         return $this->random;
     }
