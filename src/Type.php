@@ -70,12 +70,14 @@ class Type
 
     /**
      * Result Pay
+     * @param array $request
      * @param Bank $bankInfo
      * @param int $installment
      * @return array
      */
-    public function __result(Bank $bankInfo, mixed $installment) : array
+    public function __result(array $request, Bank $bankInfo, mixed $installment) : array
     {
+        $this->request = $request;
         $this->bankInfo = $bankInfo;
 
         $this->orderInfo = new Order();
