@@ -38,9 +38,9 @@ class Order
     /**
      * Set Card Installment
      * @param mixed $value
-     * @return int
+     * @return void
      */
-    public function setInstallment(mixed $value) : int
+    public function setInstallment(mixed $value) : void
     {
         if (gettype($value) !== 'integer') {
             $value = intval($value);
