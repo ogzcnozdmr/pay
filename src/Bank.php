@@ -20,14 +20,15 @@ class Bank
     ];
     public function __construct(string $bank)
     {
+        echo "bank bilgisi = $bank - ";
         $data = __pay_json_decode(file_get_contents(__DIR__ . '/Data/bank.json'), true);
         if (empty($data[$bank])) {
-            return 'Banka bilgisi bulunmadı';
+            echo 'Banka bilgisi bulunmadı';
         }
 
         $settings = __pay_json_decode(file_get_contents(__DIR__ . '/Data/settings.json'), true);
         if (empty($settings[$bank])) {
-            return 'Ayar bilgisi bulunmadı';
+            echo 'Ayar bilgisi bulunmadı';
         }
         $this->settings = $settings[$bank];
 
