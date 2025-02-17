@@ -81,9 +81,9 @@ class Order
 
     /**
      * Get Total
-     * @return int
+     * @return float
      */
-    public function getTotal() : int
+    public function getTotal() : float
     {
         return $this->total;
     }
