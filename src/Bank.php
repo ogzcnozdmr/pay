@@ -153,11 +153,11 @@ class Bank
 
     /**
      * Get Settings
-     * @return array
+     * @return mixed
      */
-    public function getSettings() : array
+    public function getSettings(string $key) : mixed
     {
-        return $this->settings;
+        return $this->settings->{$key} ?: '';
     }
 
     /**

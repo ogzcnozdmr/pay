@@ -133,7 +133,7 @@ class Type4 extends Type {
         $data = str_replace("{NAME}", $this->bankInfo->getSecurityName(), $data);
         $data = str_replace("{PASSWORD}", $this->bankInfo->getSecurityPassword(), $data);
         $data = str_replace("{CLIENTID}", $this->bankInfo->getSecurityClient(), $data);
-        $data = str_replace("{TRANSACTIONTYPE}", $this->bankInfo->getSettings()->transactionType, $data);
+        $data = str_replace("{TRANSACTIONTYPE}", $this->bankInfo->getSettings('transactionType'), $data);
         $data = str_replace("{TOTAL}", $value['total'], $data);
         $data = str_replace("{CURRENCYCODE}", $this->orderInfo->getCurrency(), $data);
         $data = str_replace("{PAN}", $value['pan'], $data);

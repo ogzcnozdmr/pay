@@ -12,7 +12,7 @@ class Type2 extends Type {
     public function start() : array
     {
         $MbrId = $this->bankInfo->getType() === 1 ? '5' : '12';
-        $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings()->txnType. $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
+        $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings('txnType'). $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
 
         $data = [
             'MbrId' => $MbrId,
@@ -20,7 +20,7 @@ class Type2 extends Type {
             'UserCode' => $this->bankInfo->getSecurityName(),
             'UserPass' => $this->bankInfo->getSecurityPassword(),
             'SecureType' => $this->bankInfo->getStoreType(),
-            'TxnType' => $this->bankInfo->getSettings()->txnType,
+            'TxnType' => $this->bankInfo->getSettings('txnType'),
             'InstallmentCount' => $this->orderInfo->getInstallment(),
             'Currency' => $this->orderInfo->getCurrency(),
             'OkUrl' => $this->urlInfo->getOk(),
@@ -28,7 +28,7 @@ class Type2 extends Type {
             'OrderId' => $this->orderInfo->getCode(),
             'OrgOrderId' => $this->orderInfo->getCode(),
             'PurchAmount' => $this->orderInfo->getTotal(),
-            'Lang' => $this->bankInfo->getSettings()->lang,
+            'Lang' => $this->bankInfo->getSettings('lang'),
             'Rnd' => $this->orderInfo->getRandom(),
             'Hash' => base64_encode(pack('H*', sha1($hashstr))),
             'Pan'=> $this->cardInfo->getNumber(),
@@ -183,8 +183,8 @@ class Type2 extends Type {
         $data = str_replace("{CLIENTID}", $value['clientid'], $data);
         $data = str_replace("{IP}", $this->getIp(), $data);
         $data = str_replace("{OID}", $this->orderInfo->getCode(), $data);
-        $data = str_replace("{MODE}", $this->bankInfo->getSettings()->mode, $data);
-        $data = str_replace("{TYPE}", $this->bankInfo->getSettings()->type, $data);
+        $data = str_replace("{MODE}", $this->bankInfo->getSettings('mode'), $data);
+        $data = str_replace("{TYPE}", $this->bankInfo->getSettings('type'), $data);
         $data = str_replace("{XID}", $value['xid'], $data);
         $data = str_replace("{ECI}", $value['eci'], $data);
         $data = str_replace("{CAVV}", $value['cavv'], $data);

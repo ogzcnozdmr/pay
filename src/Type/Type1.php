@@ -14,24 +14,24 @@ class Type1 extends Type {
         // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
         $pay_hash_data = [
             'amount' => $this->orderInfo->getTotal(),
-            'BillToCompany' => $this->bankInfo->getSettings()->billToCompany,
-            'BillToName' => $this->bankInfo->getSettings()->billToName,
+            'BillToCompany' => $this->bankInfo->getSettings('billToCompany'),
+            'BillToName' => $this->bankInfo->getSettings('billToName'),
             'clientid' => $this->bankInfo->getSecurityClient(),
             'currency' => $this->orderInfo->getCurrency(),
             'cv2' => $this->cardInfo->getCvv(),
             'Ecom_Payment_Card_ExpDate_Month' => $this->cardInfo->getExpireMonth(),
             'Ecom_Payment_Card_ExpDate_Year' => '20'.$this->cardInfo->getExpireYear(),
-            'hashAlgorithm' => $this->bankInfo->getSettings()->hashAlgorithm,
+            'hashAlgorithm' => $this->bankInfo->getSettings('hashAlgorithm'),
             'Instalment' => $this->orderInfo->getInstallment(),
-            'lang' => $this->bankInfo->getSettings()->lang,
+            'lang' => $this->bankInfo->getSettings('lang'),
             'oid' => $this->orderInfo->getCode(),
             'okurl' => $this->urlInfo->getOk(),
             'failUrl' => $this->urlInfo->getFail(),
             'pan' => $this->cardInfo->getNumber(),
-            'refreshtime' => $this->bankInfo->getSettings()->refreshTime,
+            'refreshtime' => $this->bankInfo->getSettings('refreshTime'),
             'rnd' => $this->orderInfo->getRandom(),
             'storetype' => $this->bankInfo->getStoreType(),
-            'TranType' => $this->bankInfo->getSettings()->tranType
+            'TranType' => $this->bankInfo->getSettings('tranType')
         ];
         $hash = __pay_param_hash($pay_hash_data, $this->bankInfo->getSecurityStoreKey());
         $data = $pay_hash_data + ['HASH' => $hash];
@@ -160,8 +160,8 @@ class Type1 extends Type {
         $data = str_replace("{CLIENTID}", $value['clientid'], $data);
         $data = str_replace("{IP}", $this->getIp(), $data);
         $data = str_replace("{OID}", $this->orderInfo->getCode(), $data);
-        $data = str_replace("{MODE}", $this->bankInfo->getSettings()->mode, $data);
-        $data = str_replace("{TYPE}", $this->bankInfo->getSettings()->type, $data);
+        $data = str_replace("{MODE}", $this->bankInfo->getSettings('mode'), $data);
+        $data = str_replace("{TYPE}", $this->bankInfo->getSettings('type'), $data);
         $data = str_replace("{XID}", $value['xid'], $data);
         $data = str_replace("{ECI}", $value['eci'], $data);
         $data = str_replace("{CAVV}", $value['cavv'], $data);
