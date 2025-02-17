@@ -32,7 +32,9 @@ class Order
      */
     public function setTotal(float $value)
     {
+        echo "total geldi - ".$value;
         $this->total = floatval(number_format($value, 2, '.', ''));
+        echo " - total çıktı - ".$this->total;
     }
 
     /**
