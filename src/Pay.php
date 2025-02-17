@@ -28,6 +28,6 @@ class Pay
     public function result(array $request, Bank $bankInfo, mixed $installment = '') {
         $type_class = implode('\\', ['Oguzcan', 'Type', 'Type'.$bankInfo->getType()]);
         $type_model = new $type_class();
-        $type_model->__start($request, $bankInfo, $installment);
+        $type_model->__result($request, $bankInfo, $installment);
     }
 }
