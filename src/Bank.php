@@ -11,7 +11,7 @@ class Bank
     private string $apiUrl3d;
     private string $storeType;
     private string $storeType3d;
-    protected \stdClass $settings;
+    private array $settings;
     private array $security = [
         'name' => '',
         'password' => '',
@@ -26,10 +26,10 @@ class Bank
         }
 
         $data = __pay_json_decode(file_get_contents(__DIR__ . '/Data/bank.json'), true);
-        if (empty($data->{$bank})) {
+        if (empty($data[$bank])) {
             return 'Ayar bilgisi bulunmadı';
         }
-        $this->settings = $data->{$bank};
+        $this->settings = $data[$bank];
 
         echo "settings";
         echo "<pre>";
@@ -92,8 +92,8 @@ class Bank
      */
     public function setSettings(string $key, string|int $value): void
     {
-        if (isset($this->settings->{$key})) {
-            $this->settings->{$key} = $value;
+        if (isset($this->settings[$key])) {
+            $this->settings[$key] = $value;
         }
     }
 
@@ -157,7 +157,7 @@ class Bank
      */
     public function getSettings(string $key) : mixed
     {
-        return $this->settings->{$key} ?: '';
+        return $this->settings[$key] ?? '';
     }
 
     /**
