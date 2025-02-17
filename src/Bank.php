@@ -4,14 +4,14 @@ namespace Oguzcan;
 
 class Bank
 {
-    private string $name;
-    private string $key;
-    private int $type;
-    private string $apiUrl;
-    private string $apiUrl3d;
-    private string $storeType;
-    private string $storeType3d;
-    private array $settings;
+    private string $name = '';
+    private string $key = '';
+    private int $type = 1;
+    private string $apiUrl = '';
+    private string $apiUrl3d = '';
+    private string $storeType = '';
+    private string $storeType3d = '';
+    private array $settings = [];
     private array $security = [
         'name' => '',
         'password' => '',
