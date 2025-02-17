@@ -238,6 +238,11 @@ class Type
      * @return false|string
      */
     private function postRequest(string $url, array $params) {
+        echo "url = $url";
+        echo "<pre>";
+        print_r($params);
+        echo "</pre>";
+        die();
         $query_content = http_build_query($params);
         $fp = fopen($url, 'r', FALSE, // do not use_include_path
             stream_context_create([
