@@ -27,10 +27,10 @@ class Bank
         }
 
         $settings = __pay_json_decode(file_get_contents(__DIR__ . '/Data/settings.json'), true);
-        if (empty($settings[$bank])) {
+        if (empty($settings['type'.$data[$bank]['type']])) {
             echo 'Ayar bilgisi bulunmadı';
         }
-        $this->settings = $settings[$bank];
+        $this->settings = $settings['type'.$data[$bank]['type']];
 
         echo "data bank";
         print_r($data[$bank]);
