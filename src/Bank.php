@@ -31,6 +31,9 @@ class Bank
         }
         $this->settings = $settings[$bank];
 
+        echo "data bank";
+        print_r($data[$bank]);
+
         $this->key = $bank;
         $this->name = $data[$bank]['name'];
         $this->type = $data[$bank]['type'];
