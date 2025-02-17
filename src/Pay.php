@@ -19,7 +19,7 @@ class Pay
     }
 
     /**
-     * Result
+     * Result test
      * @param array $request
      * @param Bank $bankInfo
      * @param mixed $installment
