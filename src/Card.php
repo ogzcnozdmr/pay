@@ -51,7 +51,7 @@ class Card
     {
         $expire = explode('/', $value);
         if (strlen($expire[1]) > 2) {
-            $expire[1] = substr($expire[1], 0, 2);
+            $expire[1] = substr($expire[1], -2);
         }
         $this->expireMonth = $expire[0];
         $this->expireYear = $expire[1];
