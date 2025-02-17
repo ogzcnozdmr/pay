@@ -35,10 +35,10 @@ class Bank
         $this->storeType3d = $data[$bank]['storeType3d'];
 
         $this->security = new \stdClass();
-        $this->security->name = '';
-        $this->security->password = '';
-        $this->security->client = '';
-        $this->security->storeKey = '';
+        $this->security->name = 'a';
+        $this->security->password = 'b';
+        $this->security->client = 'c';
+        $this->security->storeKey = 'd';
     }
 
     /**
