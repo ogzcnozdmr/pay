@@ -1,7 +1,7 @@
 {
   "type1" : {
-    "billToCompany" : "soft",
-    "billToName" : "soft",
+    "billToCompany" : "dotcomsoft",
+    "billToName" : "dotcomsoft",
     "hashAlgorithm" : "ver3",
     "lang" : "tr",
     "refreshTime" : 5,
