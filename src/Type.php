@@ -136,7 +136,6 @@ class Type
         /**
         * İnsert database history
         */
-        print_r($json);
         return (object) $json;
     }
 
