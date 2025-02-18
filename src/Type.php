@@ -184,6 +184,15 @@ class Type
     }
 
     /**
+     * Result order total
+     * @return string
+     */
+    public function resultTotal() : string
+    {
+        return '';
+    }
+
+    /**
      * Override result data array
      * @return array
      */
