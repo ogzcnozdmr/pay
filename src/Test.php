@@ -34,12 +34,12 @@ class Test
     }
 
     public function result($request) {
-        $bankInfo = new Bank($_GET['bank']);
+        $bankInfo = new Bank($_GET['paybank']);
         $bankInfo->setSecurityName('test test');
         $bankInfo->setSecurityPassword('password123');
         $bankInfo->setSecurityClient('client test');
 
         $payClass = new Pay();
-        $payClass->result($request, $bankInfo, $_GET['order'], $_GET['installment']);
+        $payClass->result($request, $bankInfo, $_GET['payorder'], $_GET['payinstallment']);
     }
 }
