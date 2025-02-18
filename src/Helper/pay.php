@@ -27,6 +27,8 @@ function __pay_param_hash($hashParams, $storeKey) {
     $escapedStoreKey = str_replace("|", "\\|", str_replace("\\", "\\\\", $storeKey));
     $hashval .= $escapedStoreKey;
 
+    echo "hashval = ".$hashval."<br> - ";
+
     $calculatedHashValue = hash('sha512', $hashval);
     $return = base64_encode(pack('H*', $calculatedHashValue));
     return $return;
