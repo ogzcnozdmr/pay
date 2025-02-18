@@ -133,6 +133,9 @@ class Type
      */
     protected function paymentFinish(array $json) : object
     {
+        if ($this->resultOrderCode()) {
+            $json['order'] = $this->resultOrderCode();
+        }
         /**
         * İnsert database history
         */
