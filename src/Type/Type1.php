@@ -72,6 +72,8 @@ class Type1 extends Type {
     public function controlSignature() : bool
     {
         $hash = __pay_param_hash($this->request, $this->bankInfo->getSecurityStoreKey());
+        echo "hash = ".$hash." <br>";
+        echo "geln = ".$this->request['HASH']."<br>";
         return $hash == $this->request['HASH'];
     }
     /**
