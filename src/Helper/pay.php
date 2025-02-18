@@ -7,12 +7,12 @@
  * @return string
  */
 function __pay_param_hash($hashParams, $storeKey) {
+    ksort($hashParams, SORT_FLAG_CASE|SORT_STRING);
     echo "function param hash";
     echo "<pre>";
     print_r($hashParams);
     echo "</pre>";
     echo "store key = ".$storeKey."<br>";
-    ksort($hashParams, SORT_FLAG_CASE|SORT_STRING);
 
     $hashval = '';
     foreach ($hashParams as $key => $value) {
