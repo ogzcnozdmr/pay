@@ -52,6 +52,7 @@ class Type
         $this->urlInfo = $urlInfo;
 
         $this->urlInfo->setBank($bankInfo->getKey());
+        $this->urlInfo->setOrder($orderInfo->getCode());
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
         list($status, $error, $postRequest_url, $data) = $this->start();
