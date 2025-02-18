@@ -75,7 +75,7 @@ class Type
      * @param int $installment
      * @return array
      */
-    public function __result(array $request, Bank $bankInfo, mixed $installment) : array
+    public function __result(array $request, Bank $bankInfo, mixed $installment) : object
     {
         $this->request = $request;
         $this->bankInfo = $bankInfo;
@@ -129,15 +129,15 @@ class Type
     /**
      * Payment finish die
      * @param array $json
-     * @return array
+     * @return object
      */
-    protected function paymentFinish(array $json) : array
+    protected function paymentFinish(array $json) : object
     {
         /**
         * İnsert database history
         */
         print_r($json);
-        return $json;
+        return (object) $json;
     }
 
     /**
