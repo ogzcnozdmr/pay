@@ -7,6 +7,7 @@ class Url
     private string $ok;
     private string $fail;
     private string $bank;
+    private string $order;
     private int $installment = 0;
 
     /**
@@ -32,21 +33,31 @@ class Url
     /**
      * Set Bank
      * @param string $value
-     * @return string
+     * @return void
      */
-    public function setBank(string $value) : string
+    public function setBank(string $value) : void
     {
-        return $this->bank = $value;
+        $this->bank = $value;
     }
 
     /**
      * Set Installment
      * @param int $value
-     * @return int
+     * @return void
      */
-    public function setInstallment(int $value) : int
+    public function setInstallment(int $value) : void
     {
-        return $this->installment = $value;
+        $this->installment = $value;
+    }
+
+    /**
+     * Set Installment
+     * @param string $value
+     * @return void
+     */
+    public function setOrder(string $value) : void
+    {
+        $this->order = $value;
     }
 
     /**
@@ -55,7 +66,7 @@ class Url
      */
     public function getOk() : string
     {
-        return "{$this->ok}/{$this->bank}/{$this->installment}&type=ok";
+        return "{$this->ok}?bank={$this->bank}&order={$this->order}&installment={$this->installment}&type=ok";
     }
 
     /**
@@ -64,7 +75,7 @@ class Url
      */
     public function getFail() : string
     {
-        return "{$this->fail}/{$this->bank}/{$this->installment}&type=fail";
+        return "{$this->fail}?bank={$this->bank}&order={$this->order}&installment={$this->installment}&type=fail";
     }
 
     /**

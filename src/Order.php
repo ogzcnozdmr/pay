@@ -27,10 +27,10 @@ class Order
 
     /**
      * Set Total
-     * @param float $value
+     * @param string|float $value
      * @return void
      */
-    public function setTotal(float $value)
+    public function setTotal(string|float $value)
     {
         echo "total geldi - ".$value;
         $this->total = floatval(number_format($value, 2, '.', ''));

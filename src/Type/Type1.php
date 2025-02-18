@@ -58,12 +58,12 @@ class Type1 extends Type {
         return [$response, $xml, $error];
     }
     /**
-     * Result order code
+     * Result order total
      * @return string
      */
-    public function resultOrderCode() : string
+    public function resultTotal() : string
     {
-        return $this->request['oid'];
+        return $this->request['amount'];
     }
     /**
      * Control signature

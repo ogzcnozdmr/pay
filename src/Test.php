@@ -33,13 +33,13 @@ class Test
         $payClass->request($bankInfo, $orderInfo, $cardInfo, $urlInfo);
     }
 
-    public function result($request, string $bank, mixed $installment) {
-        $bankInfo = new Bank($bank);
+    public function result($request) {
+        $bankInfo = new Bank($_GET['bank']);
         $bankInfo->setSecurityName('test test');
         $bankInfo->setSecurityPassword('password123');
         $bankInfo->setSecurityClient('client test');
 
         $payClass = new Pay();
-        $payClass->result($request, $bankInfo, $installment);
+        $payClass->result($request, $bankInfo, $_GET['order'], $_GET['installment']);
     }
 }

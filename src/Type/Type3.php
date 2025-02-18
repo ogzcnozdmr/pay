@@ -54,12 +54,12 @@ class Type3 extends Type {
         return [$response, $xml, $error];
     }
     /**
-     * Result order code
+     * Result order total
      * @return string
      */
-    public function resultOrderCode() : string
+    public function resultTotal() : string
     {
-        return $this->request['OrderId'];
+        return $this->request['amount'];
     }
     /**
      * Control 3d

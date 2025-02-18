@@ -67,12 +67,12 @@ class Type4 extends Type {
         return [$response, $xml, $error];
     }
     /**
-     * Result order code
+     * Result order total
      * @return string
      */
-    public function resultOrderCode() : string
+    public function resultTotal() : string
     {
-        return $this->request['VerifyEnrollmentRequestId'];
+        return $this->request['amount'];
     }
     /**
      * Control 3d

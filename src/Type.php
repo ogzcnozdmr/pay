@@ -30,7 +30,7 @@ class Type
      * @var string
      */
     private string $mail = '';
-    protected string $request;
+    protected array $request;
     /**
      * Construct
      */
@@ -72,17 +72,19 @@ class Type
      * Result Pay
      * @param array $request
      * @param Bank $bankInfo
+     * @param string $order
      * @param int $installment
-     * @return array
+     * @return object
      */
-    public function __result(array $request, Bank $bankInfo, mixed $installment) : object
+    public function __result(array $request, Bank $bankInfo, string $order, mixed $installment) : object
     {
         $this->request = $request;
         $this->bankInfo = $bankInfo;
 
         $this->orderInfo = new Order();
-        $this->orderInfo->setCode($this->resultOrderCode());
+        $this->orderInfo->setCode($order);
         $this->orderInfo->setInstallment($installment);
+        $this->orderInfo->setTotal($this->resultTotal());
 
         /**
          * Digital Signature Control
@@ -133,8 +135,9 @@ class Type
      */
     protected function paymentFinish(array $json) : object
     {
-        if ($this->resultOrderCode()) {
-            $json['order'] = $this->resultOrderCode();
+        $json['order'] = $this->orderInfo->getCode();
+        if ($json['result']) {
+            $json['total'] = $this->orderInfo->getTotal();
         }
         /**
         * İnsert database history
@@ -159,15 +162,6 @@ class Type
     protected function result(string|array $data) : array
     {
         return [true, '', ''];
-    }
-
-    /**
-     * Override result order code function
-     * @return string
-     */
-    protected function resultOrderCode() : string
-    {
-        return '';
     }
 
     /**
