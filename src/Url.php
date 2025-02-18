@@ -66,7 +66,7 @@ class Url
      */
     public function getOk() : string
     {
-        return "{$this->ok}&paybank={$this->bank}&payorder={$this->order}&payinstallment={$this->installment}&type=ok";
+        return "{$this->ok}?paybank={$this->bank}&payorder={$this->order}&payinstallment={$this->installment}&type=ok";
     }
 
     /**
@@ -75,7 +75,7 @@ class Url
      */
     public function getFail() : string
     {
-        return "{$this->fail}&paybank={$this->bank}&payorder={$this->order}&payinstallment={$this->installment}&type=fail";
+        return "{$this->fail}?paybank={$this->bank}&payorder={$this->order}&payinstallment={$this->installment}&type=fail";
     }
 
     /**
