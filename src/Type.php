@@ -30,7 +30,20 @@ class Type
      * @var string
      */
     private string $mail = '';
+    /**
+     * Request
+     * @var array
+     */
     protected array $request;
+    /**
+     * Result Map
+     * @var array|string[]
+     */
+    protected array $resultMap = [
+        'code' => '',
+        'total' => '',
+        'installment' => ''
+    ];
     /**
      * Construct
      */
@@ -73,19 +86,17 @@ class Type
      * Result Pay
      * @param array $request
      * @param Bank $bankInfo
-     * @param string $order
-     * @param int $installment
      * @return object
      */
-    public function __result(array $request, Bank $bankInfo, string $order, mixed $installment) : object
+    public function __result(array $request, Bank $bankInfo) : object
     {
         $this->request = $request;
         $this->bankInfo = $bankInfo;
 
         $this->orderInfo = new Order();
-        $this->orderInfo->setCode($order);
-        $this->orderInfo->setInstallment($installment);
-        $this->orderInfo->setTotal($this->resultTotal());
+        $this->orderInfo->setCode($this->request[$this->resultMap['code']]);
+        $this->orderInfo->setInstallment($this->request[$this->resultMap['installment']]);
+        $this->orderInfo->setTotal($this->request[$this->resultMap['total']]);
 
         /**
          * Digital Signature Control
@@ -181,15 +192,6 @@ class Type
     protected function control3d() : array
     {
         return [true, ''];
-    }
-
-    /**
-     * Result order total
-     * @return string
-     */
-    public function resultTotal() : string
-    {
-        return '';
     }
 
     /**

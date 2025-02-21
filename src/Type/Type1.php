@@ -6,6 +6,15 @@ use Oguzcan\Type;
 
 class Type1 extends Type {
     /**
+     * Result Map
+     * @var array|string[]
+     */
+    public array $resultMap = [
+        'code' => 'oid',
+        'total' => 'amount',
+        'installment' => 'Installment'
+    ];
+    /**
      * Pay start
      * @return array
      */
@@ -56,14 +65,6 @@ class Type1 extends Type {
         $response = $xml->Response == 'Approved';
         $error = isset($xml->ErrMsg) ? (string) $xml->ErrMsg : '';
         return [$response, $xml, $error];
-    }
-    /**
-     * Result order total
-     * @return string
-     */
-    public function resultTotal() : string
-    {
-        return $this->request['amount'];
     }
     /**
      * Control signature
