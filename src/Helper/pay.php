@@ -9,6 +9,16 @@
 function __pay_param_hash($hashParams, $storeKey) {
     ksort($hashParams, SORT_FLAG_CASE|SORT_STRING);
 
+    if (isset($hashParams['paybank'])) {
+        unset($hashParams['paybank']);
+    }
+    if (isset($hashParams['payorder'])) {
+        unset($hashParams['payorder']);
+    }
+    if (isset($hashParams['payinstallment'])) {
+        unset($hashParams['payinstallment']);
+    }
+
     echo "function param hash";
     echo "<pre>";
     print_r($hashParams);
