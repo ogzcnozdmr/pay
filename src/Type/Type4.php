@@ -12,7 +12,7 @@ class Type4 extends Type {
     public array $resultMap = [
         'code' => 'oid',
         'total' => 'amount',
-        'installment' => 'Installment'
+        'installment' => 'Instalment'
     ];
     /**
      * Pay start
