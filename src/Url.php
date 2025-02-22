@@ -7,7 +7,7 @@ class Url
     private string $ok;
     private string $fail;
     private string $bank;
-    private string $order;
+    private string $orderCode;
     private int $installment = 0;
 
     /**
@@ -51,13 +51,13 @@ class Url
     }
 
     /**
-     * Set Installment
+     * Set Order Code
      * @param string $value
      * @return void
      */
-    public function setOrder(string $value) : void
+    public function setOrdeCode(string $value) : void
     {
-        $this->order = $value;
+        $this->orderCode = $value;
     }
 
     /**
@@ -94,5 +94,14 @@ class Url
     public function getInstallment() : int
     {
         return $this->installment;
+    }
+
+    /**
+     * Get Order Code
+     * @return int
+     */
+    public function getOrderCode() : int
+    {
+        return $this->orderCode;
     }
 }

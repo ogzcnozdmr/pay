@@ -30,16 +30,23 @@ class Test
         $urlInfo->setFail('fail url link');
 
         $payClass = new Pay();
-        $payClass->request($bankInfo, $orderInfo, $cardInfo, $urlInfo);
+        $result = $payClass->request($bankInfo, $orderInfo, $cardInfo, $urlInfo);
+        if (!$result->result) {
+            echo "error";
+        }
     }
 
-    public function result($request) {
-        $bankInfo = new Bank($_GET['paybank']);
+    public function result($request, $bank) {
+        $bankInfo = new Bank($bank);
         $bankInfo->setSecurityName('test test');
         $bankInfo->setSecurityPassword('password123');
         $bankInfo->setSecurityClient('client test');
+        $bankInfo->setSecurityStoreKey('store key test');
 
         $payClass = new Pay();
-        $payClass->result($request, $bankInfo, $_GET['payorder'], $_GET['payinstallment']);
+        $result = $payClass->result($request, $bankInfo);
+        if ($result->result) {
+            echo "success";
+        }
     }
 }
