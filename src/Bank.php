@@ -2,6 +2,8 @@
 
 namespace Oguzcan;
 
+use Exception;
+
 class Bank
 {
     private string $name = '';
@@ -18,22 +20,22 @@ class Bank
         'client' => '',
         'storeKey' => ''
     ];
+
+    /**
+     * @throws Exception
+     */
     public function __construct(string $bank)
     {
-        echo "bank bilgisi = $bank - ";
         $data = __pay_json_decode(file_get_contents(__DIR__ . '/Data/bank.json'), true);
         if (empty($data[$bank])) {
-            echo 'Banka bilgisi bulunmadı';
+            throw new Exception('Banka bilgisi bulunmadı.');
         }
 
         $settings = __pay_json_decode(file_get_contents(__DIR__ . '/Data/settings.json'), true);
         if (empty($settings['type'.$data[$bank]['type']])) {
-            echo 'Ayar bilgisi bulunmadı';
+            throw new Exception('Ayar bilgisi bulunmadı.');
         }
         $this->settings = $settings['type'.$data[$bank]['type']];
-
-        echo "data bank";
-        print_r($data[$bank]);
 
         $this->key = $bank;
         $this->name = $data[$bank]['name'];

@@ -55,7 +55,7 @@ class Url
      * @param string $value
      * @return void
      */
-    public function setOrdeCode(string $value) : void
+    public function setOrderCode(string $value) : void
     {
         $this->orderCode = $value;
     }

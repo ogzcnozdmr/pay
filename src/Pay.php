@@ -5,6 +5,12 @@ namespace Oguzcan;
 class Pay
 {
     /**
+     * Default mail address
+     * @var string
+     */
+    private string $mail = '';
+
+    /**
      * Request
      * @param Bank $bankInfo
      * @param Order $orderInfo
@@ -15,6 +21,7 @@ class Pay
     public function request(Bank $bankInfo, Order $orderInfo, Card $cardInfo, Url $urlInfo) {
         $type_class = implode('\\', ['Oguzcan', 'Type', 'Type'.$bankInfo->getType()]);
         $type_model = new $type_class();
+        $type_model->setMail($this->mail);
         return $type_model->__start($bankInfo, $orderInfo, $cardInfo, $urlInfo);
     }
 
@@ -29,5 +36,14 @@ class Pay
         $type_class = implode('\\', ['Oguzcan', 'Type', 'Type'.$bankInfo->getType()]);
         $type_model = new $type_class();
         return $type_model->__result($request, $bankInfo);
+    }
+
+    /**
+     * Set Mail
+     * @param string $value
+     * @return void
+     */
+    public function setMail(string $value) {
+        $this->mail =  $value;
     }
 }

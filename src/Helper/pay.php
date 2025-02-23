@@ -9,12 +9,6 @@
 function __pay_param_hash($hashParams, $storeKey) {
     ksort($hashParams, SORT_FLAG_CASE|SORT_STRING);
 
-    echo "function param hash";
-    echo "<pre>";
-    print_r($hashParams);
-    echo "</pre>";
-    echo "store key = ".$storeKey."<br>";
-
     $hashval = '';
     foreach ($hashParams as $key => $value) {
         $escapedParamValue = str_replace('|', "\\|", str_replace("\\", "\\\\", $value));
@@ -27,8 +21,6 @@ function __pay_param_hash($hashParams, $storeKey) {
 
     $escapedStoreKey = str_replace("|", "\\|", str_replace("\\", "\\\\", $storeKey));
     $hashval .= $escapedStoreKey;
-
-    echo "hashval = ".$hashval."<br> - ";
 
     $calculatedHashValue = hash('sha512', $hashval);
     $return = base64_encode(pack('H*', $calculatedHashValue));
