@@ -9,8 +9,13 @@ class Order
     private string $currency = '949';
     private int $installment;
     private string $random;
+    private string $ip;
     public function __construct()
     {
+        /*
+         * Ip adresini ekler
+         */
+        $this->setIp(__pay_ip());
         $this->setCode($this->randomOrderCode());
         $this->setRandom(microtime());
     }
@@ -69,6 +74,16 @@ class Order
     }
 
     /**
+     * Set Ip
+     * @param ?string $value
+     * @return void
+     */
+    public function setIp(?string $value = null)
+    {
+        $this->ip = $value ?: __pay_ip();
+    }
+
+    /**
      * Get Code
      * @return string
      */
@@ -111,6 +126,15 @@ class Order
     public function getRandom() : string
     {
         return $this->random;
+    }
+
+    /**
+     * Get Ip
+     * @return string
+     */
+    public function getIp() : string
+    {
+        return $this->ip;
     }
 
     /**

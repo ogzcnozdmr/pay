@@ -35,6 +35,7 @@ class Bank
         if (empty($settings['type'.$data[$bank]['type']])) {
             throw new Exception('Ayar bilgisi bulunmadı.');
         }
+
         $this->settings = $settings['type'.$data[$bank]['type']];
 
         $this->key = $bank;

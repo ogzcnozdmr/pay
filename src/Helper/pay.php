@@ -47,3 +47,11 @@ function __pay_json_decode(string|null $json, bool $type = false) : array | obje
 {
     return json_decode($json, $type) ?: ($type ? [] : new \stdClass());
 }
+
+/**
+ * Ip Address
+ * @return mixed
+ */
+function __pay_ip() {
+    return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+}

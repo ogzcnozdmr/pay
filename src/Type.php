@@ -52,7 +52,7 @@ class Type
         /*
          * Ip adresini ekler
          */
-        $this->ip = $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
+        $this->ip = __pay_ip();
     }
     /**
      * Start Pay
@@ -148,8 +148,12 @@ class Type
     protected function paymentFinish(array $json) : object
     {
         $json['order'] = $this->orderInfo->getCode();
+        $json['date'] = date('Y-m-d H:i:s');
         if ($json['result']) {
-            $json['total'] = $this->orderInfo->getTotal();
+            $json += [
+                'total' => $this->orderInfo->getTotal(),
+                'installment' => $this->orderInfo->getInstallment()
+            ];
         }
         /**
         * İnsert database history
