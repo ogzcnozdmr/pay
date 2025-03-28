@@ -44,9 +44,12 @@ class Type5 extends Type {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 90);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Authorization: Basic '.$this->bankInfo->getSecurityPassword()
+        ]);
         $result = curl_exec($ch);
         curl_close($ch);
         $xml = __pay_json_decode($result);
