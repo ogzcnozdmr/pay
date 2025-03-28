@@ -68,7 +68,7 @@ class Type
         $this->urlInfo->setOrderCode($orderInfo->getCode());
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
-        list($status, $error, $postRequest_url, $data) = $this->start();
+        list($status, $error, $postRequest_url, $data, $dataHeader) = $this->start();
 
         if (!$status) {
             if ($error !== '') {
@@ -79,7 +79,7 @@ class Type
                 "message" => "İşlem onay almadı {$error}"
             ]);
         }
-        echo $this->postRequest($postRequest_url, $data);
+        echo $this->postRequest($postRequest_url, $data, $dataHeader);
     }
 
     /**
@@ -250,15 +250,15 @@ class Type
      * @param array $params
      * @return false|string
      */
-    private function postRequest(string $url, array $params) {
+    private function postRequest(string $url, array $params, array $dataHeader = []) {
         $query_content = http_build_query($params);
         $fp = fopen($url, 'r', FALSE, // do not use_include_path
             stream_context_create([
                 'http' => [
-                    'header'  => [ // header array does not need '\r\n'
+                    'header'  => array_merge([ // header array does not need '\r\n'
                         'Content-type: application/x-www-form-urlencoded',
                         'Content-Length: ' . strlen($query_content)
-                    ],
+                    ], $dataHeader),
                     'method'  => 'POST',
                     'content' => $query_content
                 ]

@@ -32,7 +32,7 @@ class Type5 extends Type {
             'year' => $this->cardInfo->getExpireMonth(),
             'cvc' => $this->cardInfo->getCvv()
         ];
-        return [true, '', $this->bankInfo->getApiUrl3d(), $pay_hash_data];
+        return [true, '', $this->bankInfo->getApiUrl3d(), $pay_hash_data, ['Authorization: Basic '.$this->bankInfo->getSecurityPassword()]];
     }
     /**
      * Pay result
