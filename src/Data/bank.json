@@ -58,8 +58,8 @@
   "paynet": {
     "name": "Pay Net",
     "type": "5",
-    "apiUrl": "https://api.paynet.com.tr/v2/transaction/tds_initial",
-    "apiUrl3d": "https://api.paynet.com.tr/v2/transaction/tds_charge",
+    "apiUrl": "https://api.paynet.com.tr/v2/transaction/tds_charge",
+    "apiUrl3d": "https://api.paynet.com.tr/v2/transaction/tds_initial",
     "storeType" : "3d",
     "storeType3d" : ""
   }
