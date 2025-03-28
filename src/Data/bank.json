@@ -54,5 +54,13 @@
     "apiUrl3d": "https://3dsecure.vakifbank.com.tr:4443/MPIAPI/MPI_Enrollment.aspx",
     "storeType" : "3d",
     "storeType_3d" : ""
+  },
+  "paynet": {
+    "name": "Pay Net",
+    "type": "5",
+    "apiUrl": "https://api.paynet.com.tr/v2/transaction/tds_initial",
+    "apiUrl3d": "https://api.paynet.com.tr/v2/transaction/tds_charge",
+    "storeType" : "3d",
+    "storeType_3d" : ""
   }
 }

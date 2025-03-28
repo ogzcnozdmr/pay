@@ -210,9 +210,9 @@ class Type
     /**
      * Override set payment value data
      * @param array $value
-     * @return string
+     * @return string|array
      */
-    protected function setPaymentValue(array $value) : string
+    protected function setPaymentValue(array $value) : string|array
     {
         return '';
     }
