@@ -69,7 +69,6 @@ class Type
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
         list($status, $error, $postRequest_url, $data, $dataHeader) = $this->start();
-        die("geldi4");
 
         if (!$status) {
             if ($error !== '') {
