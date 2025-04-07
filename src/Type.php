@@ -68,7 +68,7 @@ class Type
         $this->urlInfo->setOrderCode($orderInfo->getCode());
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
-        list($status, $error, $postRequest_url, $data, $dataHeader) = $this->start();
+        list($status, $error, $postRequest_url, $data) = $this->start();
         echo "geldi buraya"; die();
         if (!$status) {
             if ($error !== '') {
@@ -79,7 +79,7 @@ class Type
                 "message" => "İşlem onay almadı {$error}"
             ]);
         }
-        echo $this->postRequest($postRequest_url, $data, $dataHeader);
+        echo $this->postRequest($postRequest_url, $data);
     }
 
     /**
