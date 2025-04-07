@@ -22,10 +22,7 @@ class Pay
         $type_class = implode('\\', ['Oguzcan', 'Type', 'Type'.$bankInfo->getType()]);
         $type_model = new $type_class();
         $type_model->setMail($this->mail);
-        $a = $type_model->__start($bankInfo, $orderInfo, $cardInfo, $urlInfo);
-        echo "a ya geldi";
-        print_r($a);
-        return $a;
+        return $type_model->__start($bankInfo, $orderInfo, $cardInfo, $urlInfo);
     }
 
     /**
