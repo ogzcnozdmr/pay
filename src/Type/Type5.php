@@ -53,8 +53,8 @@ class Type5 extends Type {
                 'session_id' => $curlresult->session_id,
             ];
         } else {
-            echo "başarısız girdi"; die();
             $error = $curlresult->message ?: '';
+            echo "başarısız girdi"; die();
         }
         return [$success, $error, $postRequest_url, $data];
     }
