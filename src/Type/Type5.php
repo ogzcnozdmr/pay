@@ -44,7 +44,7 @@ class Type5 extends Type {
         /*
          * Başarılı
          */
-        if ($curlresult->code === 0) {
+        if ($curlresult->code === '0') {
             $success = true;
             $postRequest_url = $curlresult->post_url;
             $data = [
