@@ -64,6 +64,10 @@ class Type5 extends Type {
     public function result($data) : array
     {
         $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
+        echo "<pre>";
+        print_r($xml);
+        echo "</pre>";
+        die();
         $response = $xml->code === '0';
         $error = $xml->message ?: '';
         return [$response, $xml, $error];
