@@ -100,10 +100,7 @@ class Type5 extends Type {
      */
     public function control3d() : array
     {
-        print_r($this->request);
-        die();
-        $mdStatus = $this->request['md_status'];
-        $status = $mdStatus == '1';
+        $status = isset($this->request['session_id']) && isset($this->request['token_id']) && isset($this->request['reference_no']);
         $message = $this->request['message'] ?? '';
         return [$status, $message];
     }
