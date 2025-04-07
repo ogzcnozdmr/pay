@@ -68,6 +68,10 @@ class Type
         $this->urlInfo->setOrderCode($orderInfo->getCode());
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
+
+
+        die("geldi3");
+
         list($status, $error, $postRequest_url, $data, $dataHeader) = $this->start();
 
         if (!$status) {
