@@ -40,11 +40,11 @@ class Type5 extends Type {
 
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
-        print_r($curlresult); die();
         /*
          * Başarılı
          */
         if ($curlresult->code === 0) {
+            echo "success girdi"; die();
             $success = true;
             $postRequest_url = $curlresult->post_url;
             $data = [
