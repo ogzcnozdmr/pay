@@ -40,7 +40,8 @@ class Type5 extends Type {
 
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
-
+        print_r($curlresult);
+        die();
         /*
          * Başarılı
          */
@@ -99,11 +100,6 @@ class Type5 extends Type {
      */
     public function control3d() : array
     {
-
-        echo "<pre>";
-        print_r($this->request);
-        echo "</pre>";
-        die();
         $mdStatus = $this->request['md_status'];
         $status = $mdStatus == '1';
         $message = $this->request['message'] ?? '';
