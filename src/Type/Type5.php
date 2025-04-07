@@ -38,6 +38,9 @@ class Type5 extends Type {
             'cvc' => $this->cardInfo->getCvv()
         ];
 
+        echo "curl data";
+        print_r($curldata);
+
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $curldata));
         echo "result";
