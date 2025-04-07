@@ -20,8 +20,13 @@ class Type5 extends Type {
      */
     public function start() : array
     {
-        // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
-        $pay_hash_data = [
+        $success = false;
+        $error = 'İşlem Başarısız';
+        $postRequest_url = '';
+        $data = [];
+
+        $curldata = // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
+        [
             'return_url' => $this->urlInfo->getOk(),
             'amount' => $this->orderInfo->getTotal(),
             'reference_no' => $this->orderInfo->getCode(),
@@ -32,7 +37,23 @@ class Type5 extends Type {
             'year' => $this->cardInfo->getExpireMonth(),
             'cvc' => $this->cardInfo->getCvv()
         ];
-        return [true, '', $this->bankInfo->getApiUrl3d(), $pay_hash_data, ['Authorization: Basic '.$this->bankInfo->getSecurityPassword()]];
+
+        //TODO:CURL YERİNE REQUEST KULLAN
+        $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $curldata));
+        /*
+         * Başarılı
+         */
+        if ($curlresult->code === '0') {
+            $success = true;
+            $postRequest_url = $curlresult->post_url;
+            $data = [
+                'token_id' => $curlresult->token_id,
+                'session_id' => $curlresult->session_id,
+            ];
+        } else {
+            $error = $curlresult->message ?: '';
+        }
+        return [$success, $error, $postRequest_url, $data];
     }
     /**
      * Pay result
@@ -41,22 +62,27 @@ class Type5 extends Type {
      */
     public function result($data) : array
     {
+        $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $data));
+        $response = $xml->code === '0';
+        $error = $xml->message ?: '';
+        return [$response, $xml, $error];
+    }
+
+    private function curl($url, $data) {
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 90);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: Basic '.$this->bankInfo->getSecurityPassword()
         ]);
         $result = curl_exec($ch);
         curl_close($ch);
-        $xml = __pay_json_decode($result);
-        $response = $xml->code === '0';
-        $error = $xml->message ?: '';
-        return [$response, $xml, $error];
+        return $result;
     }
+
     /**
      * Control signature
      * @return bool
@@ -71,7 +97,7 @@ class Type5 extends Type {
      */
     public function control3d() : array
     {
-        $mdStatus = $this->request['mdStatus'];
+        $mdStatus = $this->request['md_status'];
         $status = $mdStatus == '1';
         $message = $this->request['message'] ?? '';
         return [$status, $message];
