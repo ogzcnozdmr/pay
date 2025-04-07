@@ -65,10 +65,8 @@ class Type5 extends Type {
     public function result($data) : array
     {
         $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
-        print_r($xml);
-        die();
         $response = isset($xml->session_id) && isset($xml->token_id) && isset($xml->reference_no);
-        $error = $xml->message ?: 'İşlem başarısız';
+        $error = $xml->bank_error_short_desc ?: 'İşlem başarısız';
         return [$response, $xml, $error];
     }
 
