@@ -40,6 +40,7 @@ class Type5 extends Type {
 
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
+        print_r($curlresult);
         /*
          * Başarılı
          */
@@ -52,6 +53,7 @@ class Type5 extends Type {
                 'session_id' => $curlresult->session_id,
             ];
         } else {
+            echo "başarısız girdi"; die();
             $error = $curlresult->message ?: '';
         }
         return [$success, $error, $postRequest_url, $data];
