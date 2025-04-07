@@ -45,7 +45,7 @@ class Type5 extends Type {
          * Başarılı
          */
         if ($curlresult->code === 0) {
-            echo "success girdi"; die();
+            echo "success girdi";
             $success = true;
             $postRequest_url = $curlresult->post_url;
             $data = [
@@ -54,7 +54,7 @@ class Type5 extends Type {
             ];
         } else {
             $error = $curlresult->message ?: '';
-            echo "başarısız girdi"; die();
+            echo "başarısız girdi $error";
         }
         return [$success, $error, $postRequest_url, $data];
     }
