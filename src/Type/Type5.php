@@ -42,7 +42,7 @@ class Type5 extends Type {
         print_r($curldata);
 
         //TODO:CURL YERİNE REQUEST KULLAN
-        $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $curldata));
+        $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
         echo "result";
         print_r($curlresult);
         die();
@@ -68,7 +68,7 @@ class Type5 extends Type {
      */
     public function result($data) : array
     {
-        $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $data));
+        $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
         $response = $xml->code === '0';
         $error = $xml->message ?: '';
         return [$response, $xml, $error];
@@ -82,7 +82,8 @@ class Type5 extends Type {
         curl_setopt($ch, CURLOPT_URL, $url);
         curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Authorization: Basic '.$this->bankInfo->getSecurityPassword()
+            'Authorization: Basic '.$this->bankInfo->getSecurityPassword(),
+            'Content-Type: application/json'
         ]);
         $result = curl_exec($ch);
         curl_close($ch);
