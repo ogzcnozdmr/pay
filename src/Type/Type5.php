@@ -100,6 +100,8 @@ class Type5 extends Type {
      */
     public function control3d() : array
     {
+        print_r($this->request);
+        die();
         $mdStatus = $this->request['md_status'];
         $status = $mdStatus == '1';
         $message = $this->request['message'] ?? '';
