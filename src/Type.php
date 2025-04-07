@@ -69,7 +69,6 @@ class Type
         $this->urlInfo->setInstallment($orderInfo->getInstallment());
 
         list($status, $error, $postRequest_url, $data) = $this->start();
-        echo "geldi buraya"; die();
         if (!$status) {
             if ($error !== '') {
                 $error = "($error)";
