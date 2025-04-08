@@ -28,7 +28,7 @@ class Type5 extends Type {
         $curldata = // 3D modelinde hash hesaplamasında işlem tipi ve taksit kullanılmıyor
         [
             'return_url' => $this->urlInfo->getOk(),
-            'amount' => floatval(str_replace('.', ',', ((string) $this->orderInfo->getTotal()))),
+            'amount' => str_replace('.', ',', (string) $this->orderInfo->getTotal()),
             'reference_no' => $this->orderInfo->getCode(),
             'domain' => $_SERVER['SERVER_NAME'],
             'card_holder' => $this->cardInfo->getName(),
