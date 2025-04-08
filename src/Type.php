@@ -150,8 +150,8 @@ class Type
         $json['date'] = date('Y-m-d H:i:s');
         if ($json['result']) {
             $json += [
-                'total' => $this->orderInfo->getTotal(),
-                'installment' => $this->orderInfo->getInstallment()
+                //'total' => $this->orderInfo->getTotal(),
+                //'installment' => $this->orderInfo->getInstallment()
             ];
         }
         /**
