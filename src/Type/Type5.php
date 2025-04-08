@@ -34,7 +34,7 @@ class Type5 extends Type {
             'card_holder' => $this->cardInfo->getName(),
             'pan' => $this->cardInfo->getNumber(),
             'month' => $this->cardInfo->getExpireMonth(),
-            'year' => $this->cardInfo->getExpireMonth(),
+            'year' => $this->cardInfo->getExpireYear(),
             'cvc' => $this->cardInfo->getCvv()
         ];
         echo "<pre>";
