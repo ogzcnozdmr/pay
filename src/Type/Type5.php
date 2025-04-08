@@ -37,6 +37,9 @@ class Type5 extends Type {
             'year' => $this->cardInfo->getExpireMonth(),
             'cvc' => $this->cardInfo->getCvv()
         ];
+        echo "<pre>";
+        print_r($curldata);
+        echo "</pre>";
 
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
