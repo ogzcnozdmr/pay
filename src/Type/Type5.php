@@ -72,10 +72,10 @@ class Type5 extends Type {
      */
     public function result($data) : array
     {
-        $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
-        $response = $xml->code == '0';
-        $error = $xml->bank_error_short_desc ?: 'İşlem başarısız';
-        return [$response, $xml, $error];
+        $result = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
+        $response = $result->code == '0' && $result->md_status == '1';
+        $error = $result->bank_error_short_desc ?: 'İşlem başarısız';
+        return [$response, $result, $error];
     }
 
     private function curl($url, $data) {
