@@ -53,7 +53,7 @@ class Type5 extends Type {
         /*
          * Başarılı
          */
-        if ($curlresult->code === '0') {
+        if ($curlresult->code == '0') {
             $success = true;
             $postRequest_url = $curlresult->post_url;
             $data = [
@@ -73,7 +73,7 @@ class Type5 extends Type {
     public function result($data) : array
     {
         $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
-        $response = $xml->code === '0';
+        $response = $xml->code == '0';
         $error = $xml->bank_error_short_desc ?: 'İşlem başarısız';
         return [$response, $xml, $error];
     }
