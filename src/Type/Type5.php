@@ -42,13 +42,8 @@ class Type5 extends Type {
             $curldata['instalment'] = $this->orderInfo->getInstallment();
         }
 
-        echo "<pre>";
-        print_r($curldata);
-        echo "</pre>";
-
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
-        print_r($curlresult);
 
         /*
          * Başarılı
