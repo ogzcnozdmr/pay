@@ -73,7 +73,6 @@ class Type
             if ($error !== '') {
                 $error = "($error)";
             }
-            echo "payment finisledi";
             return $this->paymentFinish([
                 "result" => false,
                 "message" => "İşlem onay almadı {$error}"

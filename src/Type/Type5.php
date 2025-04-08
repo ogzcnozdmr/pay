@@ -37,13 +37,13 @@ class Type5 extends Type {
             'year' => $this->cardInfo->getExpireYear(),
             'cvc' => $this->cardInfo->getCvv()
         ];
-        echo "<pre>";
-        print_r($curldata);
-        echo "</pre>";
+
+        if ($this->orderInfo->getInstallment() > 1) {
+            $curldata['instalment'] = $this->orderInfo->getInstallment();
+        }
 
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
-        print_r($curlresult);
         /*
          * Başarılı
          */
@@ -67,7 +67,7 @@ class Type5 extends Type {
     public function result($data) : array
     {
         $xml = __pay_json_decode($this->curl($this->bankInfo->getApiUrl(), $data));
-        $response = isset($xml->session_id) && isset($xml->token_id) && isset($xml->reference_no);
+        $response = $xml->code === '0';
         $error = $xml->bank_error_short_desc ?: 'İşlem başarısız';
         return [$response, $xml, $error];
     }
