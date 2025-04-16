@@ -93,6 +93,7 @@ class Type
         $this->bankInfo = $bankInfo;
 
         $this->orderInfo = new Order();
+        echo $this->resultMap['code']; die();
         $this->orderInfo->setCode($this->request[$this->resultMap['code']]);
         //$this->orderInfo->setInstallment($this->request[$this->resultMap['installment']] ?? 0);
         //$this->orderInfo->setTotal($this->request[$this->resultMap['total']] ?? 0);
