@@ -94,7 +94,7 @@ class Type
 
         $this->orderInfo = new Order();
         $this->orderInfo->setCode($this->request[$this->resultMap['code']]);
-        echo $this->orderInfo->getCode(); die();
+        echo $this->orderInfo->getCode();
         //$this->orderInfo->setInstallment($this->request[$this->resultMap['installment']] ?? 0);
         //$this->orderInfo->setTotal($this->request[$this->resultMap['total']] ?? 0);
 
