@@ -100,7 +100,8 @@ class Type4 extends Type {
             'currencyamount' => $this->request['PurchAmount'],
             'transactionid' => $this->request['VerifyEnrollmentRequestId'],
             'cavv' => $this->request['Cavv'],
-            'eci' => $this->request['Eci']
+            'eci' => $this->request['Eci'],
+            'installment' => $this->request[$this->resultMap['installment']]
         ];
     }
     /**
@@ -117,7 +118,7 @@ class Type4 extends Type {
             "<Password>{PASSWORD}</Password>".
             "<TerminalNo>{CLIENTID}</TerminalNo>".
             "<TransactionType>{TRANSACTIONTYPE}</TransactionType>";
-        if ($this->orderInfo->getInstallment() > 1) {
+        if (!empty($value['installment'])) {
             $data .= "<NumberOfInstallments>".$this->orderInfo->getInstallment()."</NumberOfInstallments>";
         }
         $data .= "<CurrencyAmount>{TOTAL}</CurrencyAmount>".
