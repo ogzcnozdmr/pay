@@ -10,9 +10,9 @@ class Type3 extends Type {
      * @var array|string[]
      */
     public array $resultMap = [
-        'code' => 'oid',
-        'total' => 'amount',
-        'installment' => 'Instalment'
+        'code' => 'OrderId',
+        'total' => 'PurchAmount',
+        'installment' => 'InstallmentCount'
     ];
     /**
      * Pay start
