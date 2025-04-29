@@ -90,6 +90,10 @@ class Type
     public function __result(array $request, Bank $bankInfo) : object
     {
         $this->request = $request;
+        echo "<pre>";
+        print_r($request);
+        echo "</pre>";
+        die();
         $this->bankInfo = $bankInfo;
 
         $this->orderInfo = new Order();
