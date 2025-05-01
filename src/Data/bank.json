@@ -42,8 +42,8 @@
   "finans": {
     "name": "Finans Kart",
     "type": "3",
-    "apiUrl": "https://vpos.qnbfinansbank.com/Gateway/Default.aspx",
-    "apiUrl3d": "https://vpos.qnbfinansbank.com/Gateway/Default.aspx",
+    "apiUrl": "https://vpos.qnb.com.tr/Gateway/Default.aspx",
+    "apiUrl3d": "https://vpos.qnb.com.tr/Gateway/Default.aspx",
     "storeType" : "3DModel",
     "storeType3d" : "3DModelPayment"
   },
