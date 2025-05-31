@@ -20,7 +20,7 @@ class Type2 extends Type {
      */
     public function start() : array
     {
-        $MbrId = $this->bankInfo->getType() === 1 ? '5' : '12';
+        $MbrId = $this->cardInfo->getType() === 1 ? '5' : '12';
         $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings('txnType'). $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
 
         $data = [
