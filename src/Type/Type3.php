@@ -20,7 +20,7 @@ class Type3 extends Type {
      */
     public function start() : array
     {
-        $MbrId = $this->cardInfo->getType() === 2 ? '12' : '5';
+        $MbrId = $this->cardInfo->getType() === 1 ? '5' : '12';
         $hashstr = $MbrId . $this->orderInfo->getCode() . $this->orderInfo->getTotal() . $this->urlInfo->getOk() . $this->urlInfo->getFail() . $this->bankInfo->getSettings('txnType'). $this->orderInfo->getInstallment() . $this->orderInfo->getRandom()  . $this->bankInfo->getSecurityStoreKey();
 
         $data = [
@@ -42,7 +42,7 @@ class Type3 extends Type {
             'CardHolderName'=> $this->cardInfo->getName(),
             'Pan'=> $this->cardInfo->getNumber(),
             'Cvv2' => $this->cardInfo->getCvv(),
-            'Expiry' => $this->cardInfo->getExpireYear().$this->cardInfo->getExpireMonth()
+            'Expiry' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear()
         ];
         return [true, '', $this->bankInfo->getApiUrl3d(), $data];
     }
