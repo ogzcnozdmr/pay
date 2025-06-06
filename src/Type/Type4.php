@@ -44,6 +44,13 @@ class Type4 extends Type {
         }
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = $this->curl($curldata);
+        echo "<pre>";
+        print_r($curldata);
+        echo "</pre> sonuç ";
+        echo "<pre>";
+        print_r($curldata);
+        echo "</pre>";
+        die($curlresult);
         if (isset($curlresult->Message->VERes->Status)) {
             /*
              * Başarılı
