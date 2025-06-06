@@ -45,10 +45,6 @@ class Type3 extends Type {
             'Cvv2' => $this->cardInfo->getCvv(),
             'Expiry' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear()
         ];
-        /*echo "<pre>";
-        print_r($data);
-        echo "</pre> sonuç ";
-        die();*/
         return [true, '', $this->bankInfo->getApiUrl3d(), $data];
     }
     /**
