@@ -46,7 +46,7 @@ class Type5 extends Type {
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $curldata));
         echo "url : ". $this->bankInfo->getApiUrl3d();
         echo "<pre>";
-        print_r($curldata)
+        print_r($curldata);
         echo "</pre> sonuc";
         echo "<pre>";
         print_r($curlresult);
