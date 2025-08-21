@@ -116,6 +116,9 @@ class Type4 extends Type {
      */
     public function setPaymentValue(array $value) : string
     {
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
         $data =
             "<?xml version=\"1.0\" encoding=\"ISO-8859-9\"?>".
             "<VposRequest>".
