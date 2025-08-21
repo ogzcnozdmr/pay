@@ -70,12 +70,6 @@ class Type4 extends Type {
     public function result($data) : array
     {
         $xml = $this->curl($data, 'result');
-        echo "<pre>";
-        print_r($data);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($xml);
-        echo "</pre>";
         $response = (string) $xml->ResultCode === '0000';
         $error = isset($xml->ResultDetail) ? (string) $xml->ResultDetail : '';
         return [$response, $xml, $error];
@@ -97,9 +91,6 @@ class Type4 extends Type {
      */
     public function resultData() : array
     {
-        echo "request<pre>";
-        print_r($this->request);
-        echo "</pre>";
         return [
             'total' => number_format($this->request['PurchAmount'] / 100,2,'.',''),//123456.67
             'pan' => $this->request['Pan'],
@@ -118,9 +109,6 @@ class Type4 extends Type {
      */
     public function setPaymentValue(array $value) : string
     {
-        echo "<pre>";
-        print_r($value);
-        echo "</pre>";
         $data =
             "<?xml version=\"1.0\" encoding=\"ISO-8859-9\"?>".
             "<VposRequest>".
