@@ -76,7 +76,6 @@ class Type4 extends Type {
         echo "<pre>";
         print_r($xml);
         echo "</pre>";
-        die();
         $response = (string) $xml->ResultCode === '0000';
         $error = isset($xml->ResultDetail) ? (string) $xml->ResultDetail : '';
         return [$response, $xml, $error];
@@ -102,7 +101,7 @@ class Type4 extends Type {
         print_r($this->request);
         echo "</pre>";
         return [
-            'total' => number_format($this->request['PurchAmount'],2,'.',''),//123456.67
+            'total' => number_format($this->request['PurchAmount'] / 100,2,'.',''),//123456.67
             'pan' => $this->request['Pan'],
             'expiry' => '20'.$this->request['Expiry'],
             'cvv' => $this->request['SessionInfo'],
