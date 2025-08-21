@@ -98,6 +98,9 @@ class Type4 extends Type {
      */
     public function resultData() : array
     {
+        echo "request<pre>";
+        print_r($this->request);
+        echo "</pre>";
         return [
             'total' => number_format($this->request['PurchAmount'],2,'.',''),//123456.67
             'pan' => $this->request['Pan'],
