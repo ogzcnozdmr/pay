@@ -44,13 +44,6 @@ class Type4 extends Type {
         }
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = $this->curl($curldata);
-        echo "<pre>";
-        print_r($curldata);
-        echo "</pre>";
-        echo "<pre>";
-        print_r($curlresult);
-        echo "</pre>";
-        die();
         if (isset($curlresult->Message->VERes->Status)) {
             /*
              * Başarılı
@@ -76,8 +69,14 @@ class Type4 extends Type {
      */
     public function result($data) : array
     {
-        $result = $this->curl($data, 'result');
-        $xml = simplexml_load_string($result);
+        $xml = $this->curl($data, 'result');
+        echo "<pre>";
+        print_r($data);
+        echo "</pre>";
+        echo "<pre>";
+        print_r($xml);
+        echo "</pre>";
+        die();
         $response = (string) $xml->ResultCode === '0000';
         $error = isset($xml->ResultDetail) ? (string) $xml->ResultDetail : '';
         return [$response, $xml, $error];
@@ -166,10 +165,7 @@ class Type4 extends Type {
             curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
             curl_setopt($ch, CURLOPT_POSTFIELDS, "prmstr=" . $data);
         }
-        $result = curl_exec($ch);
-        if ($type === 'start') {
-            $result = simplexml_load_string($result);
-        }
+        $result = simplexml_load_string(curl_exec($ch));
         curl_close($ch);
         return $result;
     }
