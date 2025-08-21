@@ -45,6 +45,9 @@ class Type4 extends Type {
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = $this->curl($curldata);
         echo "<pre>";
+        print_r($curldata);
+        echo "</pre>";
+        echo "<pre>";
         print_r($curlresult);
         echo "</pre>";
         die();
