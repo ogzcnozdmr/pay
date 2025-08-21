@@ -64,6 +64,19 @@ class Type1 extends Type {
         $xml = simplexml_load_string($result);
         $response = $xml->Response == 'Approved';
         $error = isset($xml->ErrMsg) ? (string) $xml->ErrMsg : '';
+        switch ($error) {
+            case 'Hata detayi icin HOSTMSG alanina bakin.':
+                if (isset($xml->Extra) && !empty($xml->Extra->HOSTMSG)) {
+                    $error = $xml->Extra->HOSTMSG;
+                }
+                break;
+            case 'Gecersiz tutar.':
+            case 'Gecersiz Transaction.':
+                if (isset($xml->Extra) && !empty($xml->Extra->TEBACIKLAMA)) {
+                    $error = $xml->Extra->TEBACIKLAMA;
+                }
+                break;
+        }
         return [$response, $xml, $error];
     }
     /**
