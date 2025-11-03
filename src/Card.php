@@ -53,8 +53,8 @@ class Card
         if (strlen($expire[1]) > 2) {
             $expire[1] = substr($expire[1], -2);
         }
-        $this->expireMonth = $expire[0];
-        $this->expireYear = $expire[1];
+        $this->expireMonth = trim($expire[0]);
+        $this->expireYear = trim($expire[1]);
     }
 
     /**
