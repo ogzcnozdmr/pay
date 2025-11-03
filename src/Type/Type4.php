@@ -39,14 +39,10 @@ class Type4 extends Type {
             'SessionInfo' => $this->cardInfo->getCvv()
         ];
 
-        echo "<pre>";
-        print_r($curldata);
-        echo "</pre>";
-        die();
-
         if ($this->orderInfo->getInstallment() > 1) {
             $curldata['InstallmentCount'] = $this->orderInfo->getInstallment();
         }
+
         //TODO:CURL YERİNE REQUEST KULLAN
         $curlresult = $this->curl($curldata);
         if (isset($curlresult->Message->VERes->Status)) {
