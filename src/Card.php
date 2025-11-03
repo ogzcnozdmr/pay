@@ -7,8 +7,8 @@ class Card
     private string $number;
     private int $cvv;
     private int $type;//1 Mastercard - 2 VISA
-    private int $expireYear;
-    private int $expireMonth;
+    private string $expireYear;
+    private string $expireMonth;
     private string $name;
 
     /**
