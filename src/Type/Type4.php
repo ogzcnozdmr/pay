@@ -31,7 +31,7 @@ class Type4 extends Type {
             'VerifyEnrollmentRequestId' => $this->orderInfo->getCode(),
             'Pan'=> $this->cardInfo->getNumber(),
             'ExpiryDate' => $this->cardInfo->getExpireYear().$this->cardInfo->getExpireMonth(),
-            'PurchaseAmount' => number_format($this->orderInfo->getTotal(),2,'.','.'),
+            'PurchaseAmount' => number_format($this->orderInfo->getTotal(),2,'.',''),
             'Currency' => $this->orderInfo->getCurrency(),
             'BrandName' => $this->cardInfo->getType() === 1 ? '100' : '200', //1 visa 2 mastercard
             'SuccessUrl' => $this->urlInfo->getOk(),
