@@ -42,7 +42,7 @@ class Type6 extends Type {
             'requestDateTime' => __pay_date_time()
         ];
         echo "security = ".$this->bankInfo->getSecurityClient();
-        $hash = __pay_param_hash($pay_hash_data, $this->bankInfo->getSecurityClient());
+        $hash = __pay_param_hash_v2($pay_hash_data, $this->bankInfo->getSecurityClient());
         $data = $pay_hash_data + ['hash' => $hash];
         return [true, '', $this->bankInfo->getApiUrl3d(), $data];
     }
