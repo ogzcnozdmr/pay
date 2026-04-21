@@ -89,6 +89,7 @@ class Type
      */
     public function __result(array $request, Bank $bankInfo) : object
     {
+        echo "resultra geldi";
         $this->request = $request;
         $this->bankInfo = $bankInfo;
 
