@@ -9,9 +9,9 @@
   },
   "ak": {
     "name": "Ak Kart",
-    "type": "1",
-    "apiUrl": "https://www.sanalakpos.com/fim/api",
-    "apiUrl3d": "https://www.sanalakpos.com/fim/est3Dgate",
+    "type": "6",
+    "apiUrl": "https://api.akbank.com/api/v1/payment/virtualpos",
+    "apiUrl3d": "https://virtualpospaymentgateway.akbank.com/securepay",
     "storeType" : "3d",
     "storeType3d" : ""
   },

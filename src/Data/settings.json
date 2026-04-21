@@ -24,5 +24,8 @@
   },
   "type5" : {
     "transactionType" : "Sale"
+  },
+  "type6" : {
+    "transactionType" : "Sale"
   }
 }

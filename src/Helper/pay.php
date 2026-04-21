@@ -55,3 +55,13 @@ function __pay_json_decode(string|null $json, bool $type = false) : array | obje
 function __pay_ip() {
     return $_SERVER['HTTP_CLIENT_IP'] ?? $_SERVER['HTTP_X_FORWARDED_FOR'] ?? $_SERVER['REMOTE_ADDR'];
 }
+
+/**
+ * Date Time
+ * @return string
+ */
+function __pay_date_time() {
+    list($ms, $sec) = explode(' ', microtime());
+    $ms = substr($ms, 2, 3);
+    return gmdate('Y-m-d\TH:i:s', $sec) . '.' . $ms;
+}
