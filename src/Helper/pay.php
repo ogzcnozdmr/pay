@@ -27,6 +27,11 @@ function __pay_param_hash($hashParams, $storeKey) {
     return $return;
 }
 
+function __pay_param_hash_v2($hashParams, $storeKey) {
+    $hash = hash_hmac('sha512', $hashParams, $storeKey, true);
+    return base64_encode($hash);
+}
+
 /**
  * Project json encode
  * @param object|array|null $json
