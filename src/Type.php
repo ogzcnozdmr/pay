@@ -277,9 +277,7 @@ class Type
         $result = stream_get_contents($fp); // no maxlength/offset
         fclose($fp);
         echo "result";
-        echo "<pre>";
-        print_r($result);
-        echo "</pre>";
+        echo $result;
         return $result;
     }
 }

@@ -10,8 +10,8 @@
   "ak": {
     "name": "Ak Kart",
     "type": "6",
-    "apiUrl": "https://virtualpospaymentgateway.akbank.com/securepay",
-    "apiUrl3d": "https://api.akbank.com/api/v1/payment/virtualpos",
+    "apiUrl": "https://api.akbank.com/api/v1/payment/virtualpos",
+    "apiUrl3d": "https://virtualpospaymentgateway.akbank.com/securepay",
     "storeType" : "3d",
     "storeType3d" : ""
   },
