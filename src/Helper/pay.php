@@ -65,3 +65,21 @@ function __pay_date_time() {
     $ms = substr($ms, 2, 3);
     return gmdate('Y-m-d\TH:i:s', $sec) . '.' . $ms;
 }
+
+/**
+ * Get Random Hash Number
+ * @param $n
+ * @return string
+ */
+function __pay_random_number_base16 ($n = 128)
+{
+    $characters = '0123456789ABCDEF';
+    $randomString = '';
+
+    for ($i = 0; $i < $n; $i++) {
+        $index = rand(0, strlen($characters) - 1);
+        $randomString .= $characters[$index];
+    }
+
+    return strtoupper($randomString);
+}
