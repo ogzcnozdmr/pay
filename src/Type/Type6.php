@@ -84,7 +84,11 @@ class Type6 extends Type {
      */
     public function controlSignature() : bool
     {
-        $hash = __pay_param_hash($this->request, $this->bankInfo->getSecurityStoreKey());
+        echo "<pre>";
+        print_r($this->request);
+        echo "</pre>";
+        die();
+        $hash = __pay_param_hash($this->request, $this->bankInfo->getSecurityClient());
         return $hash == $this->request['hash'];
     }
     /**
