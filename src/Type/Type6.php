@@ -33,7 +33,7 @@ class Type6 extends Type {
             'okUrl' => $this->urlInfo->getOk(),
             'failUrl' => $this->urlInfo->getFail(),
             'emailAddress' => $this->getMail(),
-            'subMerchantId' => $this->bankInfo->getSecurityStoreKey(),
+            //'subMerchantId' => $this->bankInfo->getSecurityStoreKey(),
             'creditCard' => $this->cardInfo->getNumber(),
             'expiredDate' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear(),
             'cvv' => $this->cardInfo->getCvv(),
