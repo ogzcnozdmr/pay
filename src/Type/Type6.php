@@ -35,12 +35,13 @@ class Type6 extends Type {
             'emailAddress' => $this->getMail(),
             'subMerchantId' => 101,
             'creditCard' => $this->cardInfo->getNumber(),
-            'cardHolderName' => $this->cardInfo->getName(),
             'expiredDate' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear(),
             'cvv' => $this->cardInfo->getCvv(),
+            'cardHolderName' => $this->cardInfo->getName(),
             'randomNumber' => __pay_random_number_base16(),
             'requestDateTime' => __pay_date_time()
         ];
+        echo "security = ".$this->bankInfo->getSecurityClient();
         $hash = __pay_param_hash($pay_hash_data, $this->bankInfo->getSecurityClient());
         $data = $pay_hash_data + ['hash' => $hash];
         return [true, '', $this->bankInfo->getApiUrl3d(), $data];
