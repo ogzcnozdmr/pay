@@ -280,7 +280,6 @@ class Type
         echo "<pre>";
         print_r($result);
         echo "</pre>";
-        die();
         return $result;
     }
 }

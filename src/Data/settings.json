@@ -26,6 +26,7 @@
     "transactionType" : "Sale"
   },
   "type6" : {
-    "transactionType" : "Sale"
+    "transactionType" : "Sale",
+    "lang" : "TR"
   }
 }
