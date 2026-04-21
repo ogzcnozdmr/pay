@@ -38,7 +38,7 @@ class Type6 extends Type {
             'cardHolderName' => $this->cardInfo->getName(),
             'expiredDate' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear(),
             'cvv' => $this->cardInfo->getCvv(),
-            'randomNumber' => $this->orderInfo->getRandom(),
+            'randomNumber' => __pay_random_number_base16(),
             'requestDateTime' => __pay_date_time()
         ];
         $hash = __pay_param_hash($pay_hash_data, $this->bankInfo->getSecurityClient());

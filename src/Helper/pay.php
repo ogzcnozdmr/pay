@@ -71,7 +71,7 @@ function __pay_date_time() {
  * @param $n
  * @return string
  */
-function __pay_random_number_base16 ($n = 128)
+function __pay_random_number_base16($n = 128)
 {
     $characters = '0123456789ABCDEF';
     $randomString = '';
