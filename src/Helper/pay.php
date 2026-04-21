@@ -28,7 +28,11 @@ function __pay_param_hash($hashParams, $storeKey) {
 }
 
 function __pay_param_hash_v2($hashParams, $storeKey) {
-    $hash = hash_hmac('sha512', $hashParams, $storeKey, true);
+    $hashval = '';
+    foreach ($hashParams as $value) {
+        $hashval .= $value;
+    }
+    $hash = hash_hmac('sha512', $hashval, $storeKey, true);
     return base64_encode($hash);
 }
 
