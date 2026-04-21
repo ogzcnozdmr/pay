@@ -10,7 +10,7 @@ class Type6 extends Type {
      * @var array|string[]
      */
     public array $resultMap = [
-        'code' => 'oid',
+        'code' => 'orderId',
         'total' => 'amount',
         'installment' => 'Instalment'
     ];
@@ -36,9 +36,9 @@ class Type6 extends Type {
             'subMerchantId' => 101,
             'creditCard' => $this->cardInfo->getNumber(),
             'cardHolderName' => $this->cardInfo->getName(),
-            'expiredDate' => $this->cardInfo->getExpireYear().$this->cardInfo->getExpireMonth(),
+            'expiredDate' => $this->cardInfo->getExpireMonth().$this->cardInfo->getExpireYear(),
             'cvv' => $this->cardInfo->getCvv(),
-            'randomNumber' => __pay_random_number_base16(),
+            'randomNumber' => $this->orderInfo->getRandom(),
             'requestDateTime' => __pay_date_time()
         ];
         $hash = __pay_param_hash($pay_hash_data, $this->bankInfo->getSecurityClient());
