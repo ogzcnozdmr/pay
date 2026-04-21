@@ -29,7 +29,7 @@ class Type6 extends Type {
             'lang' => $this->bankInfo->getSettings('lang'),
             'amount' => number_format($this->orderInfo->getTotal(),2,'.',''),
             'currencyCode' => $this->orderInfo->getCurrency(),
-            'installCount' => min(1, $this->orderInfo->getInstallment()),
+            'installCount' => max(1, $this->orderInfo->getInstallment()),
             'okUrl' => $this->urlInfo->getOk(),
             'failUrl' => $this->urlInfo->getFail(),
             'emailAddress' => $this->getMail(),
@@ -84,10 +84,6 @@ class Type6 extends Type {
      */
     public function controlSignature() : bool
     {
-        echo "<pre>";
-        print_r($this->request);
-        echo "</pre>";
-        die();
         $hash = __pay_param_hash($this->request, $this->bankInfo->getSecurityClient());
         return $hash == $this->request['hash'];
     }
