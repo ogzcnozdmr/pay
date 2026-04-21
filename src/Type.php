@@ -98,16 +98,6 @@ class Type
         $this->orderInfo->setTotal($this->request[$this->resultMap['total']] ?? 0);
 
         /**
-         * Digital Signature Control
-         */
-        if (!$this->controlSignature()) {
-            return $this->paymentFinish([
-                "result"  => false,
-                "message" => 'Güvenlik uyarısı. Sayısal imza geçerli değil.'
-            ]);
-        }
-
-        /**
          * Digital 3D control
          */
         list($control3dResult, $control3dMessage) = $this->control3d();
@@ -119,6 +109,16 @@ class Type
             return $this->paymentFinish([
                 "result" => false,
                 "message" => "3D işlemi onay almadı {$control3dMessage}"
+            ]);
+        }
+
+        /**
+         * Digital Signature Control
+         */
+        if (!$this->controlSignature()) {
+            return $this->paymentFinish([
+                "result"  => false,
+                "message" => 'Güvenlik uyarısı. Sayısal imza geçerli değil.'
             ]);
         }
 
