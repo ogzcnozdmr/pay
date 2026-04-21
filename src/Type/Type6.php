@@ -41,7 +41,6 @@ class Type6 extends Type {
             'randomNumber' => __pay_random_number_base16(),
             'requestDateTime' => __pay_date_time()
         ];
-        echo "security = ".$this->bankInfo->getSecurityClient();
         $hash = __pay_param_hash_v2($pay_hash_data, $this->bankInfo->getSecurityClient());
         $data = $pay_hash_data + ['hash' => $hash];
         return [true, '', $this->bankInfo->getApiUrl3d(), $data];

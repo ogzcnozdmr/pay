@@ -89,7 +89,6 @@ class Type
      */
     public function __result(array $request, Bank $bankInfo) : object
     {
-        echo "resultra geldi";
         $this->request = $request;
         $this->bankInfo = $bankInfo;
 
@@ -251,14 +250,6 @@ class Type
      * @return false|string
      */
     private function postRequest(string $url, array $params, array $dataHeader = []) {
-        echo "url";
-        echo "<pre>",
-        print_r($url);
-        echo "</pre>";
-        echo "params";
-        echo "<pre>",
-        print_r($params);
-        echo "</pre>";
         $query_content = http_build_query($params);
         $fp = fopen($url, 'r', FALSE, // do not use_include_path
             stream_context_create([
@@ -277,8 +268,6 @@ class Type
         }
         $result = stream_get_contents($fp); // no maxlength/offset
         fclose($fp);
-        echo "result";
-        echo $result;
         return $result;
     }
 }
