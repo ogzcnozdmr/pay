@@ -130,7 +130,7 @@ class Type
 
         list($result, $data, $error) = $this->result($paymentData);
 
-        $message = $result ? 'Ödeme işlemi başarıyla gerçekleştirildi' : $error;
+        $message = $result ? 'Ödeme işlemi başarıyla gerçekleştirildi.' : $error;
 
         return $this->paymentFinish([
             'result' => $result,
