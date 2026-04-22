@@ -96,14 +96,15 @@ function __pay_random_number_base16($n = 128)
 /**
  * Pay Response Hash
  * @param array $requestMap
+ * @param string $storeKey
  * @return string
  */
-function __pay_response_hash_v2(array $requestMap) : string
+function __pay_response_hash_v2(array $requestMap, string $storeKey) : string
 {
     $params = explode('+', $requestMap['hashParams']);
     $builder = '';
     foreach($params as $param) {
         $builder .= $requestMap[$param];
     }
-    return $builder;
+    return __pay_param_hash_v2($builder, $storeKey);
 }
