@@ -27,15 +27,6 @@ function __pay_param_hash($hashParams, $storeKey) {
     return $return;
 }
 
-function __pay_param_hash_v2($hashParams, $storeKey) {
-    $hashval = '';
-    foreach ($hashParams as $value) {
-        $hashval .= $value;
-    }
-    $hash = hash_hmac('sha512', $hashval, $storeKey, true);
-    return base64_encode($hash);
-}
-
 /**
  * Project json encode
  * @param object|array|null $json
@@ -94,17 +85,21 @@ function __pay_random_number_base16($n = 128)
 }
 
 /**
- * Pay Response Hash
- * @param array $requestMap
+ * Pay Param Hash
+ * @param array|string $hashParams
  * @param string $storeKey
  * @return string
  */
-function __pay_response_hash_v2(array $requestMap, string $storeKey) : string
+function __pay_param_hash_v2(array|string $hashParams, string $storeKey) : string
 {
-    $params = explode('+', $requestMap['hashParams']);
-    $builder = '';
-    foreach($params as $param) {
-        $builder .= $requestMap[$param];
+    $hashval = '';
+    if (is_array($hashParams)) {
+        foreach ($hashParams as $value) {
+            $hashval .= $value;
+        }
+    } else {
+        $hashval = $hashParams;
     }
-    return __pay_param_hash_v2($builder, $storeKey);
+    $hash = hash_hmac('sha512', $hashval, $storeKey, true);
+    return base64_encode($hash);
 }
