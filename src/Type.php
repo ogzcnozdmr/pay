@@ -97,6 +97,11 @@ class Type
         $this->orderInfo->setInstallment($this->request[$this->resultMap['installment']] ?? 0);
         $this->orderInfo->setTotal($this->request[$this->resultMap['total']] ?? 0);
 
+        echo "<pre>";
+        print_r($this->request);
+        echo "</pre>";
+        die();
+
         /**
          * Digital 3D control
          */
