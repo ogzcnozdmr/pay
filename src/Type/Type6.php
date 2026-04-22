@@ -58,8 +58,9 @@ class Type6 extends Type {
         curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 90);
-        $result = json_decode(curl_exec($ch));
+        $result = curl_exec($ch);
         curl_close($ch);
+        print_r($result);die();
         $response = $result->responseCode == 'VPS-0000';
         $error = $result->responseMessage;
         return [$response, $result, $error];
