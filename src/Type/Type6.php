@@ -12,7 +12,7 @@ class Type6 extends Type {
     public array $resultMap = [
         'code' => 'orderId',
         'total' => 'amount',
-        'installment' => 'Instalment'
+        'installment' => 'installCount'
     ];
     /**
      * Pay start
@@ -84,7 +84,7 @@ class Type6 extends Type {
      */
     public function controlSignature() : bool
     {
-        $hash = __pay_param_hash_v2($this->request, $this->bankInfo->getSecurityClient());
+        $hash = __pay_param_hash_v2(__pay_response_hash_v2($this->request), $this->bankInfo->getSecurityClient());
         return $hash == $this->request['hash'];
     }
     /**
@@ -94,7 +94,7 @@ class Type6 extends Type {
     public function control3d() : array
     {
         $mdStatus = $this->request['responseCode'];
-        $status = $mdStatus == "VPS-0000";
+        $status = $mdStatus == 'VPS-0000';
         $message = $this->request['responseMessage'] ?? '';
         return [$status, $message];
     }
@@ -105,110 +105,46 @@ class Type6 extends Type {
     public function resultData() : array
     {
         return [
-            'total'    => $this->request['transaction']['amount'],
-            'clientid' => $this->request['clientid'],
-            'xid'      => $this->request['xid'],
-            'eci'      => $this->request['eci'],
-            'cavv'     => $this->request['cavv'],
-            'md'       => $this->request['md']
+            'amount' => $this->request['amount'],
+            'txnCode' => $this->request['txnCode'],
+            'installCount' => $this->request['installCount'],
+            'secureId' => $this->request['secureId'],
+            'secureData' => $this->request['secureData'],
+            'secureMd' => $this->request['secureMd'],
+            'secureEcomInd' => $this->request['secureEcomInd'],
         ];
     }
     /**
      * Set payment value
      * @param array $value
-     * @return string
+     * @return array
      */
-    public function setPaymentValue(array $value) : string
+    public function setPaymentValue(array $value) : array
     {
-        $data = [
-            "version" => "1.00",
-            "txnCode" => "1000",
-            "requestDateTime" => __pay_date_time(),
-            "randomNumber" => "**********************************",
-            "terminal" => [
-                "merchantSafeId" => "********************************",
-                "terminalSafeId" => "********************************"
+        return [
+            'version' => '1.00',
+            'txnCode' => $value['txnCode'],
+            'requestDateTime' => __pay_date_time(),
+            'randomNumber' => __pay_random_number_base16(),
+            'terminal' => [
+                'merchantSafeId' => $this->bankInfo->getSecurityName(),
+                'terminalSafeId' => $this->bankInfo->getSecurityPassword(),
             ],
-            "order" => [
-                "orderId" => "f17345db-2ea7-4294-a76c-bf0cb64b4ac9"
+            'order' => [
+                'orderId' => $this->orderInfo->getCode()
             ],
-            "transaction" => [
-                "amount" => "10.00",
-                "currencyCode" => 949,
-                "motoInd" => 0,
-                "installCount" => 1
+            'transaction' => [
+                'amount' => $value['amount'],
+                'currencyCode' => $this->orderInfo->getCurrency(),
+                'motoInd' => 0,
+                'installCount' => $value['installCount']
             ],
-            "secureTransaction" => [
-                "secureId" => "25be9a5b-8f1b-4948-8e78-071eb9acf62a",
-                "secureEcomInd" => "22",
-                "secureData" => "ABIBBicAAPYqAAAQAAAAAAAAAAA=",
-                "secureMd" => "E36995E27583638978D6E1B766F8EA3E3F51955B98B1D3565D410A76F363D9BD"
+            'secureTransaction' => [
+                'secureId' => $value['secureId'],
+                'secureEcomInd' => $value['secureEcomInd'],
+                'secureData' => $value['secureData'],
+                'secureMd' => $value['secureMd'],
             ]
         ];
-
-        $data =
-            "<?xml version=\"1.0\" encoding=\"ISO-8859-9\"?>".
-            "<CC5Request>".
-            "<Name>{NAME}</Name>".
-            "<Password>{PASSWORD}</Password>".
-            "<ClientId>{CLIENTID}</ClientId>".
-            "<IPAddress>{IP}</IPAddress>".
-            "<Email>{EMAIL}</Email>".
-            "<Mode>{MODE}</Mode>".
-            "<OrderId>{OID}</OrderId>".
-            "<GroupId></GroupId>".
-            "<TransId></TransId>".
-            "<UserId></UserId>".
-            "<Type>{TYPE}</Type>".
-            "<Number>{MD}</Number>".
-            "<Expires></Expires>".
-            "<Cvv2Val></Cvv2Val>".
-            "<Total>{TOTAL}</Total>".
-            "<Currency>{CURRENCY}</Currency>".
-            "<Taksit>{INSTALLMENT}</Taksit>".
-            "<PayerTxnId>{XID}</PayerTxnId>".
-            "<PayerSecurityLevel>{ECI}</PayerSecurityLevel>".
-            "<PayerAuthenticationCode>{CAVV}</PayerAuthenticationCode>".
-            "<CardholderPresentCode>13</CardholderPresentCode>".
-            "<BillTo>".
-            "<Name></Name>".
-            "<Street1></Street1>".
-            "<Street2></Street2>".
-            "<Street3></Street3>".
-            "<City></City>".
-            "<StateProv></StateProv>".
-            "<PostalCode></PostalCode>".
-            "<Country></Country>".
-            "<Company></Company>".
-            "<TelVoice></TelVoice>".
-            "</BillTo>".
-            "<ShipTo>".
-            "<Name></Name>".
-            "<Street1></Street1>".
-            "<Street2></Street2>".
-            "<Street3></Street3>".
-            "<City></City>".
-            "<StateProv></StateProv>".
-            "<PostalCode></PostalCode>".
-            "<Country></Country>".
-            "</ShipTo>".
-            "<Extra></Extra>".
-            "</CC5Request>";
-        $data = str_replace("{NAME}", $this->bankInfo->getSecurityName(), $data);
-        $data = str_replace("{PASSWORD}", $this->bankInfo->getSecurityPassword(), $data);
-        $data = str_replace("{CLIENTID}", $value['clientid'], $data);
-        $data = str_replace("{IP}", $this->getIp(), $data);
-        $data = str_replace("{OID}", $this->orderInfo->getCode(), $data);
-        $data = str_replace("{MODE}", $this->bankInfo->getSettings('mode'), $data);
-        $data = str_replace("{TYPE}", $this->bankInfo->getSettings('type'), $data);
-        $data = str_replace("{XID}", $value['xid'], $data);
-        $data = str_replace("{ECI}", $value['eci'], $data);
-        $data = str_replace("{CAVV}", $value['cavv'], $data);
-        $data = str_replace("{MD}", $value['md'], $data);
-        $data = str_replace("{TOTAL}", $value['total'], $data);
-        $data = str_replace("{CURRENCY}", $this->orderInfo->getCurrency(), $data);
-        $data = str_replace("{INSTALLMENT}", $this->orderInfo->getInstallment(), $data);
-        $data = str_replace("{EMAIL}", $this->getMail(), $data);
-        return $data;
     }
 }

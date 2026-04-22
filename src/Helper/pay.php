@@ -92,3 +92,18 @@ function __pay_random_number_base16($n = 128)
 
     return strtoupper($randomString);
 }
+
+/**
+ * Pay Response Hash
+ * @param array $requestMap
+ * @return string
+ */
+function __pay_response_hash_v2(array $requestMap) : string
+{
+    $params = explode('+', $requestMap['hashParams']);
+    $builder = '';
+    foreach($params as $param) {
+        $builder .= $requestMap[$param];
+    }
+    return $builder;
+}
