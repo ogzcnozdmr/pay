@@ -58,16 +58,14 @@ class Type6 extends Type {
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL => $this->bankInfo->getApiUrl(),
-            CURLOPT_POST => true,
-            CURLOPT_POSTFIELDS => $json,
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_HTTPHEADER => [
+            CURLOPT_POST => TRUE,
+            CURLOPT_RETURNTRANSFER => TRUE,
+            CURLOPT_HTTPHEADER => array(
+                'auth-hash: '.__pay_param_hash_v2($json, $this->bankInfo->getSecurityClient()),
                 'Content-Type: application/json',
-                'Accept: application/json',
-                'Expect:'
-            ],
-            CURLOPT_VERBOSE => true,
+                'Accept: application/json'
+            ),
+            CURLOPT_POSTFIELDS => $json
         ]);
         $result = curl_exec($ch);
         curl_close($ch);
