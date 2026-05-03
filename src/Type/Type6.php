@@ -52,9 +52,9 @@ class Type6 extends Type {
      */
     public function result($data) : array
     {
-        echo $this->bankInfo->getApiUrl();
+        echo $this->bankInfo->getApiUrl()."<br>";
         $json = __pay_json_encode($data);
-        echo $json;
+        echo $json."<br>";
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL => $this->bankInfo->getApiUrl(),
@@ -87,6 +87,7 @@ class Type6 extends Type {
         foreach($params as $param) {
             $builder .= $this->request[$param];
         }
+        echo "builder = ".$builder." ---  ";
         $hash = __pay_param_hash_v2($builder, $this->bankInfo->getSecurityClient());
         return $hash == $this->request['hash'];
     }
@@ -124,6 +125,10 @@ class Type6 extends Type {
      */
     public function setPaymentValue(array $value) : array
     {
+        echo "values";
+        echo "<pre>";
+        print_r($value);
+        echo "</pre>";
         return [
             'version' => '1.00',
             'txnCode' => $value['txnCode'],
