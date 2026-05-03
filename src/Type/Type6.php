@@ -55,16 +55,17 @@ class Type6 extends Type {
         echo $this->bankInfo->getApiUrl()."<br>";
         $json = __pay_json_encode($data);
         echo $json."<br>";
+        $header = [
+            'auth-hash: '.__pay_param_hash_v2($json, $this->bankInfo->getSecurityClient()),
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ];
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL => $this->bankInfo->getApiUrl(),
             CURLOPT_POST => TRUE,
             CURLOPT_RETURNTRANSFER => TRUE,
-            CURLOPT_HTTPHEADER => array(
-                'auth-hash: '.__pay_param_hash_v2($json, $this->bankInfo->getSecurityClient()),
-                'Content-Type: application/json',
-                'Accept: application/json'
-            ),
+            CURLOPT_HTTPHEADER => $header,
             CURLOPT_POSTFIELDS => $json
         ]);
         $result = curl_exec($ch);
@@ -129,7 +130,7 @@ class Type6 extends Type {
         echo "</pre>";
         return [
             'version' => '1.00',
-            'txnCode' => $value['txnCode'],
+            'txnCode' => '1000',//$value['txnCode'],
             'requestDateTime' => __pay_date_time(),
             'randomNumber' => __pay_random_number_base16(),
             'terminal' => [
