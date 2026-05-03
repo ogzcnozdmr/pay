@@ -86,7 +86,6 @@ class Type6 extends Type {
         foreach($params as $param) {
             $builder .= $this->request[$param];
         }
-        echo "builder = ".$builder." ---  ";
         $hash = __pay_param_hash_v2($builder, $this->bankInfo->getSecurityClient());
         return $hash == $this->request['hash'];
     }
@@ -144,7 +143,7 @@ class Type6 extends Type {
                 'amount' => $value['amount'],
                 'currencyCode' => $this->orderInfo->getCurrency(),
                 'motoInd' => 0,
-                'installCount' => $value['installCount']
+                'installCount' => (int) $value['installCount']
             ],
             'secureTransaction' => [
                 'secureId' => $value['secureId'],
