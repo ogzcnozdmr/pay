@@ -52,9 +52,7 @@ class Type6 extends Type {
      */
     public function result($data) : array
     {
-        echo $this->bankInfo->getApiUrl()."<br>";
         $json = __pay_json_encode($data);
-        echo $json."<br>";
         $header = [
             'auth-hash: '.__pay_param_hash_v2($json, $this->bankInfo->getSecurityClient()),
             'Content-Type: application/json',
@@ -68,9 +66,8 @@ class Type6 extends Type {
             CURLOPT_HTTPHEADER => $header,
             CURLOPT_POSTFIELDS => $json
         ]);
-        $result = curl_exec($ch);
+        $result = json_decode(curl_exec($ch));
         curl_close($ch);
-        print_r($result);die();
         $response = $result->responseCode == 'VPS-0000';
         $error = $result->responseMessage;
         return [$response, $result, $error];
@@ -123,13 +120,9 @@ class Type6 extends Type {
      */
     public function setPaymentValue(array $value) : array
     {
-        echo "values";
-        echo "<pre>";
-        print_r($value);
-        echo "</pre>";
         return [
             'version' => '1.00',
-            'txnCode' => '1000',//$value['txnCode'],
+            'txnCode' => '1000',
             'requestDateTime' => __pay_date_time(),
             'randomNumber' => __pay_random_number_base16(),
             'terminal' => [
