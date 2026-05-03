@@ -132,7 +132,7 @@ class Type6 extends Type {
                 'orderId' => $this->orderInfo->getCode()
             ],
             'transaction' => [
-                'amount' => number_format($value['amount'],2,'.',''),
+                'amount' => '100',
                 'currencyCode' => $this->orderInfo->getCurrency(),
                 'motoInd' => 0,
                 'installCount' => $value['installCount']
