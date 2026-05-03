@@ -56,6 +56,10 @@ class Type6 extends Type {
         curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
         curl_setopt($ch, CURLOPT_POST, TRUE);
         curl_setopt($ch, CURLOPT_POSTFIELDS, __pay_json_encode($data));
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            'Content-Type: application/json',
+            'Accept: application/json'
+        ]);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($ch, CURLOPT_TIMEOUT, 90);
         $result = curl_exec($ch);
