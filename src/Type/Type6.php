@@ -52,6 +52,8 @@ class Type6 extends Type {
      */
     public function result($data) : array
     {
+        echo $this->bankInfo->getApiUrl();
+        echo __pay_json_encode($data);
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
         curl_setopt($ch, CURLOPT_POST, TRUE);
