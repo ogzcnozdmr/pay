@@ -53,14 +53,16 @@ class Type6 extends Type {
     public function result($data) : array
     {
         echo $this->bankInfo->getApiUrl();
-        echo __pay_json_encode($data);
+        $json = __pay_json_encode($data);
+        echo $json;
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
         curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data, JSON_UNESCAPED_SLASHES));
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            'Accept: application/json'
+            'Accept: application/json',
+            'Content-Length: ' . strlen($json)
         ]);
         curl_setopt($ch, CURLOPT_VERBOSE, true);
         curl_setopt($ch, CURLOPT_HEADER, true);
@@ -134,7 +136,7 @@ class Type6 extends Type {
                 'orderId' => $this->orderInfo->getCode()
             ],
             'transaction' => [
-                'amount' => number_format($value['amount'],2,'.',''),
+                'amount' => $value['amount'],
                 'currencyCode' => $this->orderInfo->getCurrency(),
                 'motoInd' => 0,
                 'installCount' => $value['installCount']
