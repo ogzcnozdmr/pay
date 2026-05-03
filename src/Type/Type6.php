@@ -56,18 +56,19 @@ class Type6 extends Type {
         $json = __pay_json_encode($data);
         echo $json;
         $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, $this->bankInfo->getApiUrl());
-        curl_setopt($ch, CURLOPT_POST, TRUE);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json',
-            'Accept: application/json',
-            'Content-Length: ' . strlen($json)
+        curl_setopt_array($ch, [
+            CURLOPT_URL => $this->bankInfo->getApiUrl(),
+            CURLOPT_POST => true,
+            CURLOPT_POSTFIELDS => $json,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_HTTPHEADER => [
+                'Content-Type: application/json',
+                'Accept: application/json',
+                'Expect:'
+            ],
+            CURLOPT_VERBOSE => true,
         ]);
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-        curl_setopt($ch, CURLOPT_HEADER, true);
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 90);
         $result = curl_exec($ch);
         curl_close($ch);
         print_r($result);die();
