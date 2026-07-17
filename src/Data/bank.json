@@ -62,5 +62,13 @@
     "apiUrl3d": "https://api.paynet.com.tr/v2/transaction/tds_initial",
     "storeType" : "3d",
     "storeType3d" : ""
+  },
+  "moka": {
+    "name": "Moka United",
+    "type": "7",
+    "apiUrl": "https://service.mokaunited.com/PaymentDealer/DoDirectPaymentThreeD",
+    "apiUrl3d": "https://service.mokaunited.com/PaymentDealer/DoDirectPaymentThreeD",
+    "storeType" : "3d",
+    "storeType3d" : ""
   }
 }

@@ -122,7 +122,7 @@ class Type6 extends Type {
     {
         return [
             'version' => '1.00',
-            'txnCode' => '1000',
+            'txnCode' => '1000',//$value['txnCode'],
             'requestDateTime' => __pay_date_time(),
             'randomNumber' => __pay_random_number_base16(),
             'terminal' => [

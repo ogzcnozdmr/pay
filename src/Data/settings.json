@@ -28,5 +28,9 @@
   "type6" : {
     "transactionType" : "Sale",
     "lang" : "TR"
+  },
+  "type7" : {
+    "software" : "Pay",
+    "currency" : "TL"
   }
 }
