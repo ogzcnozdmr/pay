@@ -76,7 +76,9 @@ class Type7 extends Type {
                 'BuyerEmail' => $this->getMail(),
             ];
         }
-
+        echo "<pre>";
+        print_r($payload);
+        echo "</pre>";
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $payload));
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
