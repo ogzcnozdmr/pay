@@ -191,6 +191,7 @@ class Type7 extends Type {
         ]);
         $result = curl_exec($ch);
         curl_close($ch);
+        echo $result;
         return $result;
     }
 
