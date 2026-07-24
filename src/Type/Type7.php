@@ -81,6 +81,9 @@ class Type7 extends Type {
         echo "</pre>";
         echo $this->bankInfo->getApiUrl3d();
         $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $payload));
+        echo "<pre>";
+        print_r($curlresult);
+        echo "</pre>";
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
             $success = true;
