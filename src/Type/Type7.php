@@ -86,6 +86,7 @@ class Type7 extends Type {
         echo "</pre>";*/
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
+            echo "success geldi";
             $success = true;
             $postRequest_url = $curlresult->Data->Url;
             $this->storeCodeForHash(
@@ -93,6 +94,7 @@ class Type7 extends Type {
                 (string) ($curlresult->Data->CodeForHash ?? '')
             );
         } else {
+            echo "success gelemedi";
             $error = trim(($curlresult->ResultMessage ?? '') . ' ' . ($curlresult->ResultCode ?? '')) ?: $error;
         }
         echo "<pre>";
