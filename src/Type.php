@@ -78,7 +78,7 @@ class Type
                 "message" => "İşlem onay almadı {$error}"
             ]);
         } else if ($bankInfo->getKey() === 'moka') {
-            header($postRequest_url);
+            header("Location: {$postRequest_url}");
             exit;
         } else {
             echo $this->postRequest($postRequest_url, $data);
