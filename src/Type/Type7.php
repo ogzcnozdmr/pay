@@ -80,10 +80,10 @@ class Type7 extends Type {
         /*echo "<pre>";
         print_r($payload);
         echo "</pre>";
-        echo $this->bankInfo->getApiUrl3d();
+        echo $this->bankInfo->getApiUrl3d();*/
         echo "<pre>";
         print_r($curlresult);
-        echo "</pre>";*/
+        echo "</pre>";
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
             echo "success geldi";
