@@ -76,14 +76,14 @@ class Type7 extends Type {
                 'BuyerEmail' => $this->getMail(),
             ];
         }
-        echo "<pre>";
+        $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $payload));
+        /*echo "<pre>";
         print_r($payload);
         echo "</pre>";
         echo $this->bankInfo->getApiUrl3d();
-        $curlresult = __pay_json_decode($this->curl($this->bankInfo->getApiUrl3d(), $payload));
         echo "<pre>";
         print_r($curlresult);
-        echo "</pre>";
+        echo "</pre>";*/
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
             $success = true;
@@ -95,7 +95,9 @@ class Type7 extends Type {
         } else {
             $error = trim(($curlresult->ResultMessage ?? '') . ' ' . ($curlresult->ResultCode ?? '')) ?: $error;
         }
-
+        echo "<pre>";
+        print_r([$success, $error, $postRequest_url, $data]);
+        echo "</pre>";
         return [$success, $error, $postRequest_url, $data];
     }
 
@@ -194,7 +196,6 @@ class Type7 extends Type {
         ]);
         $result = curl_exec($ch);
         curl_close($ch);
-        echo $result;
         return $result;
     }
 
