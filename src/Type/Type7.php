@@ -80,13 +80,13 @@ class Type7 extends Type {
         /*echo "<pre>";
         print_r($payload);
         echo "</pre>";
-        echo $this->bankInfo->getApiUrl3d();*/
+        echo $this->bankInfo->getApiUrl3d();
         echo "<pre>";
         print_r($curlresult);
-        echo "</pre>";
+        echo "</pre>";*/
 
         if (($curlresult->ResultCode ?? '') === 'Success' && !empty($curlresult->Data->Url)) {
-            echo "success geldi";
+            //echo "success geldi";
             $success = true;
             $postRequest_url = $curlresult->Data->Url;
             $this->storeCodeForHash(
@@ -94,12 +94,12 @@ class Type7 extends Type {
                 (string) ($curlresult->Data->CodeForHash ?? '')
             );
         } else {
-            echo "success gelemedi";
+            //echo "success gelemedi";
             $error = trim(($curlresult->ResultMessage ?? '') . ' ' . ($curlresult->ResultCode ?? '')) ?: $error;
         }
-        echo "<pre>";
+        /*echo "<pre>";
         print_r([$success, $error, $postRequest_url, $data]);
-        echo "</pre>";
+        echo "</pre>";*/
         return [$success, $error, $postRequest_url, $data];
     }
 
