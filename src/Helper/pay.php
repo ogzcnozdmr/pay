@@ -57,6 +57,14 @@ function __pay_ip() {
 }
 
 /**
+ * Port
+ * @return mixed
+ */
+function __pay_port() {
+    return $_SERVER['REMOTE_PORT'];
+}
+
+/**
  * Date Time
  * @return string
  */

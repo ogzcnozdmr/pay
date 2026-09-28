@@ -26,6 +26,11 @@ class Type
      */
     private string $ip;
     /**
+     * İp address
+     * @var string
+     */
+    private string $port;
+    /**
      * Default mail address
      * @var string
      */
@@ -53,6 +58,10 @@ class Type
          * Ip adresini ekler
          */
         $this->ip = __pay_ip();
+        /*
+         * Ip adresini ekler
+         */
+        $this->port = __pay_port();
     }
     /**
      * Start Pay
@@ -236,6 +245,15 @@ class Type
     public function getIp() : string
     {
         return $this->ip;
+    }
+
+    /**
+     * Get Ip
+     * @return string
+     */
+    public function getPort() : string
+    {
+        return $this->port;
     }
 
     /**

@@ -59,6 +59,7 @@ class Type7 extends Type {
                 'Currency' => $this->mapCurrency(),
                 'InstallmentNumber' => max(1, $this->orderInfo->getInstallment()),
                 'ClientIP' => $this->orderInfo->getIp() ?: $this->getIp(),
+                'ClientPort' => $this->getPort(),
                 'OtherTrxCode' => $this->orderInfo->getCode(),
                 'IsPoolPayment' => 0,
                 'IsPreAuth' => 0,
